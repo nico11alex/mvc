@@ -1,0 +1,383 @@
+/* ============================================================
+   ÉLARA HOTEL — REGISTRO.CSS
+   Extiende style.css con los estilos de la página de registro
+============================================================ */
+
+/* === BODY OVERRIDE para la página de registro === */
+.reg-body {
+  min-height: 100vh;
+  background: var(--navy);
+  display: flex;
+  flex-direction: column;
+}
+
+/* ============================================================
+   LAYOUT SPLIT — izquierda imagen / derecha formulario
+============================================================ */
+.reg-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: calc(100vh - 72px); /* descuenta el navbar */
+  margin-top: 72px; /* altura del navbar fijo */
+}
+
+/* ============================================================
+   PANEL IZQUIERDO
+============================================================ */
+.reg-left {
+  position: relative;
+  overflow: hidden;
+}
+
+.reg-left-bg {
+  position: absolute;
+  inset: 0;
+}
+
+.reg-left-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    160deg,
+    rgba(13, 27, 42, 0.85) 0%,
+    rgba(13, 27, 42, 0.60) 50%,
+    rgba(13, 27, 42, 0.88) 100%
+  );
+}
+
+.reg-left-content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
+  padding: 5rem 4rem;
+}
+
+.reg-tagline {
+  font-family: var(--font-disp);
+  font-weight: 400;
+  font-size: clamp(1.8rem, 3vw, 2.8rem);
+  line-height: 1.2;
+  color: var(--white);
+  margin-bottom: 2.5rem;
+}
+
+.reg-tagline em {
+  font-style: italic;
+  color: var(--champ-lt);
+}
+
+/* PERKS LIST */
+.reg-perks {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+  margin-bottom: 3rem;
+}
+
+.reg-perks li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.8rem;
+}
+
+.perk-icon {
+  color: var(--champ);
+  font-size: 0.65rem;
+  margin-top: 0.25rem;
+  flex-shrink: 0;
+}
+
+.reg-perks li span:last-child {
+  font-size: 0.88rem;
+  font-weight: 300;
+  color: rgba(255, 255, 255, 0.7);
+  line-height: 1.6;
+  letter-spacing: 0.02em;
+}
+
+/* RATING */
+.reg-rating {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  padding-top: 2rem;
+  border-top: 1px solid rgba(200, 169, 106, 0.25);
+}
+
+.rating-stars {
+  color: var(--champ);
+  font-size: 0.85rem;
+  letter-spacing: 0.15em;
+}
+
+.rating-txt {
+  font-size: 0.72rem;
+  font-weight: 300;
+  letter-spacing: 0.1em;
+  color: rgba(255, 255, 255, 0.38);
+  text-transform: uppercase;
+}
+
+/* ============================================================
+   PANEL DERECHO — FORMULARIO
+============================================================ */
+.reg-right {
+  background: var(--off-white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 5vw;
+}
+
+.reg-form-wrap {
+  width: 100%;
+  max-width: 460px;
+}
+
+/* HEADER DEL FORM */
+.reg-form-header {
+  margin-bottom: 2.5rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid var(--gray);
+}
+
+.reg-title {
+  font-family: var(--font-disp);
+  font-size: 2.2rem;
+  font-weight: 400;
+  color: var(--navy);
+  line-height: 1.1;
+  margin-bottom: 0.6rem;
+}
+
+.reg-sub {
+  font-size: 0.85rem;
+  font-weight: 300;
+  color: var(--text-lt);
+}
+
+.reg-sub a {
+  color: var(--champ-dk);
+  font-weight: 400;
+  border-bottom: 1px solid transparent;
+  transition: border-color var(--trans);
+}
+
+.reg-sub a:hover {
+  border-color: var(--champ-dk);
+}
+
+/* ALERTA DE ÉXITO */
+.alert {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  padding: 1rem 1.2rem;
+  border-radius: 0;
+  font-size: 0.85rem;
+  font-weight: 400;
+  margin-bottom: 1.5rem;
+  border-left: 3px solid;
+}
+
+.alert-success {
+  background: rgba(34, 197, 94, 0.08);
+  border-color: #22c55e;
+  color: #166534;
+}
+.mi-alert-danger {
+  background: rgba(220, 38, 38, 0.08) !important;
+  border-left: 3px solid #e32323 !important; /* 🔥 CLAVE */
+  color: #d14a4a !important;
+}
+.alert-icon {
+  font-size: 1rem;
+  flex-shrink: 0;
+}
+
+/* ============================================================
+   CAMPOS DEL FORMULARIO
+============================================================ */
+.reg-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+/* Reutiliza .form-field de style.css + extensiones */
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  margin-bottom: 1.2rem;
+}
+
+.form-field label {
+  font-size: 0.62rem;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--text-lt);
+}
+
+/* WRAP con ícono decorativo */
+.input-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-icon {
+  position: absolute;
+  left: 1rem;
+  color: var(--champ);
+  font-size: 0.55rem;
+  pointer-events: none;
+  opacity: 0.7;
+}
+
+.input-wrap input {
+  width: 100%;
+  background: var(--white);
+  border: 1px solid var(--gray);
+  border-bottom: 2px solid var(--gray);
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  font-weight: 300;
+  color: var(--navy);
+  padding: 0.85rem 1rem 0.85rem 2.5rem;
+  outline: none;
+  transition: border-color var(--trans), box-shadow var(--trans);
+  -webkit-appearance: none;
+}
+
+.input-wrap input::placeholder {
+  color: var(--text-lt);
+  font-weight: 300;
+}
+
+.input-wrap input:focus {
+  border-color: var(--champ);
+  border-bottom-color: var(--champ-dk);
+  box-shadow: 0 4px 16px rgba(200, 169, 106, 0.08);
+}
+
+/* Estado con error */
+.form-field.has-error .input-wrap input {
+  border-color: #fca5a5;
+  border-bottom-color: #ef4444;
+}
+
+.form-field.has-error label {
+  color: #b91c1c;
+}
+
+.field-error {
+  font-size: 0.75rem;
+  font-weight: 300;
+  color: #dc2626;
+  letter-spacing: 0.03em;
+  padding-left: 0.25rem;
+}
+
+/* ============================================================
+   BOTÓN DE ENVÍO
+============================================================ */
+.reg-submit {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.8rem;
+  width: 100%;
+  background: var(--navy);
+  color: var(--white);
+  border: none;
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  padding: 1.1rem 2rem;
+  cursor: pointer;
+  transition: background var(--trans), transform var(--trans), box-shadow var(--trans);
+  margin-top: 0.8rem;
+}
+
+.reg-submit:hover {
+  background: var(--navy3);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(13, 27, 42, 0.2);
+}
+
+.submit-arrow {
+  color: var(--champ);
+  font-size: 1rem;
+  transition: transform var(--trans);
+}
+
+.reg-submit:hover .submit-arrow {
+  transform: translateX(5px);
+}
+
+/* TÉRMINOS */
+.reg-terms {
+  font-size: 0.7rem;
+  font-weight: 300;
+  color: var(--text-lt);
+  text-align: center;
+  margin-top: 1.2rem;
+  line-height: 1.6;
+}
+
+.reg-terms a {
+  color: var(--champ-dk);
+  border-bottom: 1px solid transparent;
+  transition: border-color var(--trans);
+}
+
+.reg-terms a:hover {
+  border-color: var(--champ-dk);
+}
+
+/* ============================================================
+   RESPONSIVE
+============================================================ */
+@media (max-width: 860px) {
+  .reg-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .reg-left {
+    min-height: 300px;
+  }
+
+  .reg-left-content {
+    padding: 3rem 6vw;
+  }
+
+  .reg-right {
+    padding: 3rem 6vw;
+  }
+
+  .reg-form-wrap {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .reg-title {
+    font-size: 1.8rem;
+  }
+
+  .reg-left {
+    min-height: 240px;
+  }
+
+  .reg-perks {
+    gap: 0.8rem;
+  }
+}

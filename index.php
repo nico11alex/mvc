@@ -1,14 +1,26 @@
 <?php
 session_start();
-require "controllers/controladorRegistro.php";
-require "views/registro.php";
-$registro = new ControladorRegistro();
-if($_GET['action']=='Registro'){
-    $registro->registro();
-}elseif($_GET['action']=='Validaciones'){
-    $registro->validacion($_POST);   
+require_once 'models/conexion.php';
+require_once 'config/config.php';
+require_once 'controllers/controllerBase.php';
+require_once 'models/user.php';
+$controllerBase = new ControllerBase();
+
+if(isset($_GET['action'])){
+    if($_GET['action']=='getFormRegisterUser'){
+        $controllerBase->verPagina('views/html/auth/registro.php');
+    }
+    if($_GET['action']=='registerUser'){
+        $controllerBase->registerUser($_POST);
+    }
+    if($_GET['action']=='getFormLogin'){
+        $controllerBase->verPagina('views/html/auth/inicioDeSesion.php');
+    }
+    if($_GET['action']=='confirmLogin'){
+        $controllerBase->logear($_POST);
+    }
 }else{
-    header("Location: views/home.php");
+    $controllerBase->verPagina('views/html/home.php');
 }
 
 ?>
