@@ -20,25 +20,25 @@
   <div class="split">
     <div class="form-side">
       <div class="form-card">
-        <?php
-          print_r($_SESSION);
-        ?>
-
         <p class="label-top">Bienvenido de nuevo</p>
         <h1>Iniciar sesión</h1>
         <span class="register-link">
           ¿No tienes cuenta? <a href="index.php?action=getFormRegisterUser">Regístrate aquí →</a>
         </span>
 
-        <?php if (isset($_SESSION['success'])){ ?>
+        <?php
+        session_destroy();
+        ?>
+
+        <?php if (isset($_SESSION['successs'])){ ?>
           <div class="alert alert-success">
             <span class="alert-icon">✓</span>
-            <span>¡Registro exitoso! Ya puedes iniciar sesión.</span>
+            <span>Iniciaste Sesion</span>
           </div>
         <?php } ?>
         
         <form method="POST" action="index.php?action=confirmLogin">
-          <div class="form-field <?= isset($_SESSION['errors']["email"]) ? 'has-error' : '' ?>">
+          <div class="form-field <?= isset($_SESSION['errors']) ? 'has-error' : '' ?>">
             <div class="field" id="field-email">
               <label class="field-label" for="email">Correo electrónico</label>
               <div class="input-wrap">
@@ -46,8 +46,8 @@
                 <input type="email" id="email" name="email"
                       placeholder="tucorreo@ejemplo.com" autocomplete="email"/>
               </div>
-              <?php if (isset($_SESSION['errors']["email"])){ ?>
-                <p class="field-error">⚠ <?= $_SESSION['errors']['email'] ?></p>
+              <?php if (isset($_SESSION['errors'])){ ?>
+                <p class="field-error">⚠ <?= $_SESSION['errors'] ?></p>
               <?php } ?>
             </div>
           </div>
@@ -59,8 +59,8 @@
               <input type="password" id="password" name="password"
                      placeholder="Tu contraseña" autocomplete="current-password"/>
             </div>
-            <?php if (isset($_SESSION['errors']["password"])){ ?>
-                <p class="field-error">⚠ <?= $_SESSION['errors']['password'] ?></p>
+            <?php if (isset($_SESSION['errors'])){ ?>
+                <p class="field-error">⚠ <?= $_SESSION['errors'] ?></p>
               <?php } ?>
           </div>
 

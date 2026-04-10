@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -30,7 +29,6 @@
     </div>
     <div class="reg-right">
       <div class="reg-form-wrap">
-
         <div class="reg-form-header">
           <p class="label">Nueva cuenta</p>
           <h1 class="reg-title">Crear registro</h1>
@@ -46,28 +44,57 @@
 
         <?php if (isset($_SESSION['errors']['general'])){ ?>
           <div class="alert mi-alert-danger">
-            <span class="alert-icon">✓</span>
             <span><?php echo $_SESSION['errors']['general']?></span>
+          </div>
+        <?php } ?>
+
+        <?php if (isset($_SESSION['errorEmail'])){ ?>
+          <div class="alert mi-alert-danger">
+            <span><?php echo $_SESSION['errorEmail']?></span>
+          </div>
+        <?php } ?>
+
+        <?php if (isset($_SESSION['errorNumDocument'])){ ?>
+          <div class="alert mi-alert-danger">
+            <span><?php echo $_SESSION['errorNumDocument']?></span>
           </div>
         <?php } ?>
         
 
         <form method="POST" action="index.php?action=registerUser" class="reg-form" novalidate>
-          <div class="form-field <?= isset($_SESSION['errors']["nombre"]) ? 'has-error' : '' ?>">
+          <div class="form-field <?= isset($_SESSION['errors']["name"]) ? 'has-error' : '' ?>">
             <label for="name">Nombre completo</label>
             <div class="input-wrap">
               <span class="input-icon">✦</span>
               <input
                 type="text"
                 id="name"
-                name="nombre"
+                name="name"
                 placeholder="Tu nombre completo"
-                value="<?= htmlspecialchars($_SESSION['old']['nombre'] ?? '') ?>"
+                value="<?= htmlspecialchars($_SESSION['old']['name'] ?? '') ?>"
                 autocomplete="name"
               />
             </div>
-            <?php if (isset($_SESSION['errors']["nombre"])){ ?>
-              <p class="field-error">⚠ <?= $_SESSION['errors']['nombre'] ?></p>
+            <?php if (isset($_SESSION['errors']["name"])){ ?>
+              <p class="field-error">⚠ <?= $_SESSION['errors']['name'] ?></p>
+            <?php } ?>
+          </div>
+
+          <div class="form-field <?= isset($_SESSION['errors']["num_document"]) ? 'has-error' : '' ?>">
+            <label for="name">Cedula</label>
+            <div class="input-wrap">
+              <span class="input-icon">✦</span>
+              <input
+                type="text"
+                id="num_document"
+                name="num_document"
+                placeholder="Tu cedula"
+                value="<?= htmlspecialchars($_SESSION['old']['num_document'] ?? '') ?>"
+                autocomplete="num_document"
+              />
+            </div>
+            <?php if (isset($_SESSION['errors']["num_document"])){ ?>
+              <p class="field-error">⚠ <?= $_SESSION['errors']['num_document'] ?></p>
             <?php } ?>
           </div>
 
@@ -89,37 +116,37 @@
             <?php } ?>
           </div>
 
-          <div class="form-field <?= isset($_SESSION['errors']["contraseña"]) ? 'has-error' : '' ?>">
-            <label for="contraseña">Contraseña</label>
+          <div class="form-field <?= isset($_SESSION['errors']["password"]) ? 'has-error' : '' ?>">
+            <label for="password">Contraseña</label>
             <div class="input-wrap">
               <span class="input-icon">✦</span>
               <input
                 type="password"
-                id="contraseña"
-                name="contraseña"
+                id="password"
+                name="password"
                 placeholder="Mínimo 8 caracteres"
                 autocomplete="new-password"
               />
             </div>
-            <?php if (isset($_SESSION['errors']["contraseña"])){ ?>
-              <p class="field-error">⚠ <?= $_SESSION['errors']["contraseña"] ?></p>
+            <?php if (isset($_SESSION['errors']["password"])){ ?>
+              <p class="field-error">⚠ <?= $_SESSION['errors']["password"] ?></p>
             <?php } ?>
           </div>
 
-          <div class="form-field <?= isset($_SESSION['errors']['confirmContraseña']) ? 'has-error' : '' ?>">
-            <label for="confirmContraseña">Confirmar contraseña</label>
+          <div class="form-field <?= isset($_SESSION['errors']['confirmPassword']) ? 'has-error' : '' ?>">
+            <label for="confirmPassword">Confirmar contraseña</label>
             <div class="input-wrap">
               <span class="input-icon">✦</span>
               <input
                 type="password"
-                id="confirmContraseña"
-                name="confirmContraseña"
+                id="confirmPassword"
+                name="confirmPassword"
                 placeholder="Repite tu contraseña"
                 autocomplete="new-password"
               />
             </div>
-            <?php if (isset($_SESSION['errors']['confirmContraseña'])){ ?>
-              <p class="field-error">⚠ <?= $_SESSION['errors']['confirmContraseña'] ?></p>
+            <?php if (isset($_SESSION['errors']['confirmPassword'])){ ?>
+              <p class="field-error">⚠ <?= $_SESSION['errors']['confirmPassword'] ?></p>
             <?php } ?>
           </div>
 

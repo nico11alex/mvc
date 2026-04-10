@@ -8,6 +8,8 @@
             unset($_SESSION['errors']);
             unset($_SESSION['old']);
             unset($_SESSION['success']);
+            unset($_SESSION['errorEmail']);
+            unset($_SESSION['errorCedula']);
 
             $errores = $this->validateData($datos);
             var_dump($errores);
@@ -20,11 +22,19 @@
             }
 
             $user = new User();
-            $existe = $user->validateUser($datos);
-            if($existe>0){
-                $_SESSION['errors']= ['general' => 'El usuario ya existe.'];
-                $_SESSION['old'] = $datos;
+            $existeEmail = $user->validateUser($datos);
+            $existeCedula = $user->validateNumDocument($datos);
 
+            if($existeEmail>0){
+                $_SESSION['errorEmail']= 'El correo ya esta registrado con otro usuario';
+            }
+
+            if($existeCedula>0){
+                $_SESSION['errorNumDocument']= 'La cedula ya esta registrado con otro usuario';
+            }
+
+            if(!empty($_SESSION['errorEmail'])||!empty($_SESSION['errorNumDocument'])){
+                $_SESSION['old'] = $datos;
                 header('location: ' .SITE_URL. 'index.php?action=getFormRegisterUser');
                 exit;
             }
@@ -49,14 +59,25 @@
         public function validateData($datos){
             $Errores= [];
 
-            $nombre = trim($datos["nombre"]);
+            $name = trim($datos["name"]);
+            $numDocument = trim($datos["num_document"]);
             $email = trim($datos["email"]);
-            $contraseña = $datos["contraseña"];
-            $confirmContraseña = $datos["confirmContraseña"];
+            $password = $datos["password"];
+            $confirmPassword = $datos["confirmPassword"];
 
 
-            if(empty($nombre)){
-                $Errores["nombre"] = "El nombre es obligatorio";
+            if(empty($name)){
+                $Errores["name"] = "El nombre es obligatorio";
+            }
+
+            if(empty($numDocument)){
+                $Errores["numDocument"] = "El número de documento es obligatoria";
+            }elseif(!filter_var($numDocument,FILTER_VALIDATE_INT)){
+                $Errores["numDocument"] = "El número de documento " .$numDocument. " no es un número";
+            }elseif(strlen($numDocument)!=10){
+                $Errores["numDocument"] = "El número de documento no tiene la cantidad de números correcta revisa";
+            }elseif((int)$numDocument<0){
+                $Errores["numDocument"] = "El número de documento no tiene el formato adecuado recuerda solo poner números";
             }
 
             if(empty($email)){
@@ -65,24 +86,24 @@
                 $Errores["email"] = "El email " .$email. " no tiene un formato valido";
             }
 
-            if(empty($contraseña)){
-                $Errores["contraseña"] = "La contraseña es obligatorio";
-            }elseif(strlen($contraseña) <8){
-                $Errores["contraseña"] = "La contraseña debe tener minimo 8 caracteres";
-            }elseif(!preg_match("/[A-Z]/",$contraseña)){
-                $Errores["contraseña"] = "La contraseña debe tener minimo 1 letra en mayuscula";
-            }elseif(!preg_match("/[a-z]/",$contraseña)){
-                $Errores["contraseña"] = "La contraseña debe tener minimo 1 letra en minuscula";
-            }elseif(!preg_match("/[0-9]/",$contraseña)){
-                $Errores["contraseña"] = "La contraseña debe tener minimo 1 número";
-            }elseif(!preg_match("/[@$!%*#?&]/",$contraseña)){
-                $Errores["contraseña"] = "La contraseña debe tener minimo 1 caracter especial";
+            if(empty($password)){
+                $Errores["password"] = "la contraseña es obligatorio";
+            }elseif(strlen($password) <8){
+                $Errores["password"] = "la contraseña debe tener minimo 8 caracteres";
+            }elseif(!preg_match("/[A-Z]/",$password)){
+                $Errores["password"] = "la contraseña debe tener minimo 1 letra en mayuscula";
+            }elseif(!preg_match("/[a-z]/",$password)){
+                $Errores["password"] = "la contraseña debe tener minimo 1 letra en minuscula";
+            }elseif(!preg_match("/[0-9]/",$password)){
+                $Errores["password"] = "la contraseña debe tener minimo 1 número";
+            }elseif(!preg_match("/[@$!%*#?&]/",$password)){
+                $Errores["password"] = "la contraseña debe tener minimo 1 caracter especial";
             }
 
-            if(empty($confirmContraseña)){
-                $Errores["confirmContraseña"] = "Debes confirmar la contraseña";
-            }elseif($confirmContraseña !== $contraseña){
-                $Errores["confirmContraseña"] = "ERROR CONTRASEÑA INVALIDA";
+            if(empty($confirmPassword)){
+                $Errores["confirmpassword"] = "Debes confirmar la contraseña";
+            }elseif($confirmPassword !== $password){
+                $Errores["confirmpassword"] = "ERROR password INVALIDA";
             }
 
             return $Errores;
@@ -92,26 +113,20 @@
             unset($_SESSION['errors']);
             unset($_SESSION['success']);
 
-            $Errores= [];
-            
             $user = new User();
-            $existe = $user->validateUser($datos);
-            if($existe == 0 ){
-                $_SESSION['errors']= ['email' => 'El email no aparece'];
-                header('location: ' .SITE_URL. 'index.php?action=getFormLogin');
-                exit;
-            }
-            $existe = $user->confirmPassword($datos);
-            if($existe == 0){
-                $_SESSION['errors']= ['password' => 'Error en la contraseña'];
+            $loginCorrecto = $user->validateLog($datos);
+
+            if($loginCorrecto === 0){
+                $_SESSION['errors'] = "Las credenciales son incorrectas";
                 header('location: ' .SITE_URL. 'index.php?action=getFormLogin');
                 exit;
             }
 
-            $_SESSION['success'] = 'Bienvenido';
-            header('location: ' .SITE_URL. 'index.php?action=getFormLogin');
+            
+            $_SESSION['successs'] = 'Bienvenido';
+
+            header('location: ' .SITE_URL. 'index.php');
             exit;
-
         }
     }
 ?>

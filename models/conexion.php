@@ -15,7 +15,6 @@ class Conexion{
             if(mysqli_connect_error()){
                 throw new Exception('Error de conexión a la base de datos');
             }
-        echo "Conectando a la base de datos";
     }
 
     public function desconectar(){

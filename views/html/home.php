@@ -25,7 +25,6 @@
       <img src="https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=1800&q=90" alt="Hotel Élara"/>
     </div>
     <div class="hero-overlay"></div>
-
     <div class="hero-content">
       <div class="hero-tag">Hotel & Spa · 5 Estrellas</div>
       <h1 class="hero-title">
@@ -36,7 +35,9 @@
         Sumérgete en una experiencia de hospitalidad inigualable<br/>en el corazón de la naturaleza colombiana.
       </p>
     </div>
-
+    <?php  
+    print_r($_SESSION);
+    ?>
     <div class="booking-widget">
       <div class="widget-header">
         <span>◈</span> Busca tu estadía perfecta
@@ -116,7 +117,6 @@
     </div>
   </div>
 
-  <!-- ===== HABITACIONES ===== -->
   <section class="rooms" id="habitaciones">
     <div class="rooms-header">
       <div>
@@ -214,7 +214,6 @@
     </div>
   </section>
 
-  <!-- ===== EXPERIENCIAS ===== -->
   <section class="experiences">
     <div class="exp-bg">
       <img src="https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=1600&q=80" alt="Spa"/>
@@ -248,7 +247,6 @@
     </div>
   </section>
 
-  <!-- ===== GALERÍA ===== -->
   <section class="gallery">
     <div class="gallery-header">
       <p class="label">Galería</p>
