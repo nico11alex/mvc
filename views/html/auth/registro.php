@@ -1,11 +1,14 @@
+<?php
+$documentos = $_SESSION['documentTypes'];
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Registro — Élara Hotel & Spa</title>
-  <link rel="stylesheet" href="views/style/style1.css" />
-  <link rel="stylesheet" href="views/style/style2.css?v=10000" />
+  <link rel="stylesheet" href="views/style/style1.css?v=10001" />
+  <link rel="stylesheet" href="views/style/style2.css?v=10001" />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400;1,500&family=DM+Sans:wght@200;300;400;500&display=swap" rel="stylesheet"/>
   
 </head>
@@ -60,7 +63,6 @@
           </div>
         <?php } ?>
         
-
         <form method="POST" action="index.php?action=registerUser" class="reg-form" novalidate>
           <div class="form-field <?= isset($_SESSION['errors']["name"]) ? 'has-error' : '' ?>">
             <label for="name">Nombre completo</label>
@@ -81,14 +83,29 @@
           </div>
 
           <div class="form-field <?= isset($_SESSION['errors']["num_document"]) ? 'has-error' : '' ?>">
-            <label for="name">Cedula</label>
+            <label for="name">Número de documento</label>
+            <select name="documento" class="input-wrap">
+              <option value="">Seleccione un tipo de documento</option>
+              <?php foreach($documentos as $documento): ?>
+                <option value ="<?php $documento['id']?>">
+                  <?php echo $documento['name'] ?>
+                </option>
+              <?php endforeach; ?>
+            </select>  
+            <?php if (isset($_SESSION['errors']["num_document"])){ ?>
+              <p class="field-error">⚠ <?= $_SESSION['errors']['num_document'] ?></p>
+            <?php } ?>
+          </div>
+
+          <div class="form-field <?= isset($_SESSION['errors']["num_document"]) ? 'has-error' : '' ?>">
+            <label for="name">Número de documento</label>
             <div class="input-wrap">
               <span class="input-icon">✦</span>
               <input
                 type="text"
                 id="num_document"
                 name="num_document"
-                placeholder="Tu cedula"
+                placeholder="Tu número de documento"
                 value="<?= htmlspecialchars($_SESSION['old']['num_document'] ?? '') ?>"
                 autocomplete="num_document"
               />

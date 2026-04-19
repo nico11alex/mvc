@@ -8,7 +8,7 @@ $controllerBase = new ControllerBase();
 
 if(isset($_GET['action'])){
     if($_GET['action']=='getFormRegisterUser'){
-        $controllerBase->verPagina('views/html/auth/registro.php');
+        $controllerBase->index();
     }
     if($_GET['action']=='registerUser'){
         $controllerBase->registerUser($_POST);

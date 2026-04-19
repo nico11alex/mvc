@@ -128,5 +128,22 @@
             header('location: ' .SITE_URL. 'index.php');
             exit;
         }
+
+        public function index() {
+            $errors = $_SESSION['errors'] ?? [];
+            $old = $_SESSION['old'] ?? [];
+            $success = $_SESSION['success'] ?? '';
+
+            unset($_SESSION['errors'], $_SESSION['old'], $_SESSION['success']);
+
+            $conexion = new Conexion();
+            $conexion->conectar();
+            $sql = "SELECT * FROM tipos_de_documentos";  
+            $conexion->query($sql);
+            $result = $conexion->getResult();
+            $_SESSION['documentTypes'] = $result->fetch_all(MYSQLI_ASSOC);        
+            $conexion->desconectar();
+            include 'views/html/auth/registro.php';
+        }
     }
 ?>
