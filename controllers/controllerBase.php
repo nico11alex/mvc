@@ -12,11 +12,9 @@
             unset($_SESSION['errorCedula']);
 
             $errores = $this->validateData($datos);
-            var_dump($errores);
             if(count($errores)>0){
                 $_SESSION['errors']= $errores;
                 $_SESSION['old']=$datos;
-
                 header('location: ' .SITE_URL. 'index.php?action=getFormRegisterUser');
                 exit;
             }
@@ -64,10 +62,21 @@
             $email = trim($datos["email"]);
             $password = $datos["password"];
             $confirmPassword = $datos["confirmPassword"];
+            $tipDocumento = trim($datos["tipo_documento"]);
 
+            $user = new User();
+            $opciones = $user->validarOption();
 
             if(empty($name)){
                 $Errores["name"] = "El nombre es obligatorio";
+            }
+
+            if(empty($tipDocumento)){
+                $Errores["tipoDocument"] = "Elija un tipo de documento";
+            }elseif(!filter_var($numDocument,FILTER_VALIDATE_INT)){
+                $Errores["tipoDocument"] = "Elija una de las opciones";
+            }elseif(!in_array($tipDocumento, array_column($opciones, 'id'))) {
+                $Errores["tipoDocument"] = "Esa opción no existe elija otra.";
             }
 
             if(empty($numDocument)){
@@ -130,12 +139,6 @@
         }
 
         public function index() {
-            $errors = $_SESSION['errors'] ?? [];
-            $old = $_SESSION['old'] ?? [];
-            $success = $_SESSION['success'] ?? '';
-
-            unset($_SESSION['errors'], $_SESSION['old'], $_SESSION['success']);
-
             $conexion = new Conexion();
             $conexion->conectar();
             $sql = "SELECT * FROM tipos_de_documentos";  
@@ -143,7 +146,7 @@
             $result = $conexion->getResult();
             $_SESSION['documentTypes'] = $result->fetch_all(MYSQLI_ASSOC);        
             $conexion->desconectar();
-            include 'views/html/auth/registro.php';
+            return $_SESSION['documentTypes'];
         }
     }
 ?>

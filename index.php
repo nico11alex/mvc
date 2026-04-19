@@ -5,10 +5,10 @@ require_once 'config/config.php';
 require_once 'controllers/controllerBase.php';
 require_once 'models/user.php';
 $controllerBase = new ControllerBase();
-
+$controllerBase->index();
 if(isset($_GET['action'])){
     if($_GET['action']=='getFormRegisterUser'){
-        $controllerBase->index();
+        $controllerBase->verPagina('views/html/auth/registro.php');
     }
     if($_GET['action']=='registerUser'){
         $controllerBase->registerUser($_POST);

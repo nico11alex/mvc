@@ -82,22 +82,22 @@ $documentos = $_SESSION['documentTypes'];
             <?php } ?>
           </div>
 
-          <div class="form-field <?= isset($_SESSION['errors']["num_document"]) ? 'has-error' : '' ?>">
-            <label for="name">Número de documento</label>
-            <select name="documento" class="input-wrap">
+          <div class="form-field <?= isset($_SESSION['errors']["tipoDocument"]) ? 'has-error' : '' ?>">
+            <label for="name">Tipo de documento</label>
+            <select name="tipo_documento" class="input-wrap">
               <option value="">Seleccione un tipo de documento</option>
               <?php foreach($documentos as $documento): ?>
-                <option value ="<?php $documento['id']?>">
+                <option value ="<?php echo $documento['id']?>">
                   <?php echo $documento['name'] ?>
                 </option>
               <?php endforeach; ?>
             </select>  
-            <?php if (isset($_SESSION['errors']["num_document"])){ ?>
-              <p class="field-error">⚠ <?= $_SESSION['errors']['num_document'] ?></p>
+            <?php if (isset($_SESSION['errors']["tipoDocument"])){ ?>
+              <p class="field-error">⚠ <?= $_SESSION['errors']['tipoDocument'] ?></p>
             <?php } ?>
           </div>
 
-          <div class="form-field <?= isset($_SESSION['errors']["num_document"]) ? 'has-error' : '' ?>">
+          <div class="form-field <?= isset($_SESSION['errors']["numDocument"]) ? 'has-error' : '' ?>">
             <label for="name">Número de documento</label>
             <div class="input-wrap">
               <span class="input-icon">✦</span>
@@ -106,12 +106,12 @@ $documentos = $_SESSION['documentTypes'];
                 id="num_document"
                 name="num_document"
                 placeholder="Tu número de documento"
-                value="<?= htmlspecialchars($_SESSION['old']['num_document'] ?? '') ?>"
+                value="<?= htmlspecialchars($_SESSION['old']['numDocument'] ?? '') ?>"
                 autocomplete="num_document"
               />
             </div>
-            <?php if (isset($_SESSION['errors']["num_document"])){ ?>
-              <p class="field-error">⚠ <?= $_SESSION['errors']['num_document'] ?></p>
+            <?php if (isset($_SESSION['errors']["numDocument"])){ ?>
+              <p class="field-error">⚠ <?= $_SESSION['errors']['numDocument'] ?></p>
             <?php } ?>
           </div>
 
