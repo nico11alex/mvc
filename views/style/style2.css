@@ -281,7 +281,7 @@
 }
 
 /* Estado con error */
-.form-field.has-error .input-wrap input {
+.form-field.has-error .input-wrap input ,.input-wrap select{
   border-color: #fca5a5;
   border-bottom-color: #ef4444;
 }

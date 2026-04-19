@@ -8,7 +8,7 @@ $documentos = $_SESSION['documentTypes'];
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Registro — Élara Hotel & Spa</title>
   <link rel="stylesheet" href="views/style/style1.css?v=10001" />
-  <link rel="stylesheet" href="views/style/style2.css?v=10001" />
+  <link rel="stylesheet" href="views/style/style2.css?v=10003" />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400;1,500&family=DM+Sans:wght@200;300;400;500&display=swap" rel="stylesheet"/>
   
 </head>
@@ -84,11 +84,14 @@ $documentos = $_SESSION['documentTypes'];
 
           <div class="form-field <?= isset($_SESSION['errors']["tipoDocument"]) ? 'has-error' : '' ?>">
             <label for="name">Tipo de documento</label>
-            <select name="tipo_documento" class="input-wrap">
-              <option value="">Seleccione un tipo de documento</option>
+            <select name="tipoDocument" class="input-wrap">
+              <?php if (empty($_SESSION['old']['tipoDocument'])): ?>
+                <option value="">Seleccione un tipo de documento</option>
+              <?php endif ?>
               <?php foreach($documentos as $documento): ?>
-                <option value ="<?php echo $documento['id']?>">
-                  <?php echo $documento['name'] ?>
+                <option value="<?= $documento['id'] ?>"
+                  <?= (($_SESSION['old']['tipoDocument'] ?? '') == $documento['id']) ? 'selected' : '' ?>>
+                  <?= $documento['name'] ?>
                 </option>
               <?php endforeach; ?>
             </select>  
@@ -96,15 +99,15 @@ $documentos = $_SESSION['documentTypes'];
               <p class="field-error">⚠ <?= $_SESSION['errors']['tipoDocument'] ?></p>
             <?php } ?>
           </div>
-
+          
           <div class="form-field <?= isset($_SESSION['errors']["numDocument"]) ? 'has-error' : '' ?>">
             <label for="name">Número de documento</label>
             <div class="input-wrap">
               <span class="input-icon">✦</span>
               <input
                 type="text"
-                id="num_document"
-                name="num_document"
+                id="numDocument"
+                name="numDocument"
                 placeholder="Tu número de documento"
                 value="<?= htmlspecialchars($_SESSION['old']['numDocument'] ?? '') ?>"
                 autocomplete="num_document"

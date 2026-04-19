@@ -58,23 +58,23 @@
             $Errores= [];
 
             $name = trim($datos["name"]);
-            $numDocument = trim($datos["num_document"]);
+            $numDocument = trim($datos["numDocument"]);
             $email = trim($datos["email"]);
             $password = $datos["password"];
             $confirmPassword = $datos["confirmPassword"];
-            $tipDocumento = trim($datos["tipo_documento"]);
+            $tipDocumento = trim($datos["tipoDocument"]);
 
             $user = new User();
             $opciones = $user->validarOption();
 
             if(empty($name)){
                 $Errores["name"] = "El nombre es obligatorio";
+            }elseif(strlen($name)<3){
+                $Errores["name"] = "El nombre no puede ser tan corto";
             }
 
             if(empty($tipDocumento)){
                 $Errores["tipoDocument"] = "Elija un tipo de documento";
-            }elseif(!filter_var($numDocument,FILTER_VALIDATE_INT)){
-                $Errores["tipoDocument"] = "Elija una de las opciones";
             }elseif(!in_array($tipDocumento, array_column($opciones, 'id'))) {
                 $Errores["tipoDocument"] = "Esa opción no existe elija otra.";
             }
@@ -110,9 +110,9 @@
             }
 
             if(empty($confirmPassword)){
-                $Errores["confirmpassword"] = "Debes confirmar la contraseña";
+                $Errores["confirmPassword"] = "Debes confirmar la contraseña";
             }elseif($confirmPassword !== $password){
-                $Errores["confirmpassword"] = "ERROR password INVALIDA";
+                $Errores["confirmPassword"] = "ERROR password INVALIDA";
             }
 
             return $Errores;
