@@ -26,10 +26,6 @@
           ¿No tienes cuenta? <a href="index.php?action=getFormRegisterUser">Regístrate aquí →</a>
         </span>
 
-        <?php
-        session_destroy();
-        ?>
-
         <?php if (isset($_SESSION['successs'])){ ?>
           <div class="alert alert-success">
             <span class="alert-icon">✓</span>

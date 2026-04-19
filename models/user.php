@@ -4,7 +4,7 @@
     public function validateNumDocument($data){
         $conexion = new Conexion();
         $conexion->conectar();
-        $sql = "SELECT * FROM users WHERE num_document = '$data[num_document]'";
+        $sql = "SELECT * FROM usuarios WHERE num_document = '$data[numDocument]'";
         $conexion->query($sql);
         $result = $conexion->getResult();
         $conexion->desconectar();
@@ -17,7 +17,7 @@
     public function validateUser($data){
         $conexion = new Conexion();
         $conexion->conectar();
-        $sql = "SELECT * FROM users WHERE email = '{$data['email']}'";
+        $sql = "SELECT * FROM usuarios WHERE email = '{$data['email']}'";
         $conexion->query($sql);
         $result = $conexion->getResult();
         $conexion->desconectar();
@@ -30,8 +30,8 @@
     public function registerUser($data){
         $conexion = new Conexion();
         $conexion->conectar();
-        $sql = "INSERT INTO users(name,email,password,num_document)
-        VALUES ('$data[nombre]','$data[email]','$data[password]','$data[num_document]')";
+        $sql = "INSERT INTO usuarios(name,tipos_de_documentos,num_document,email,password)
+        VALUES ('$data[name]','$data[tipoDocument]','$data[numDocument]','$data[email]','$data[password]')";
         $conexion->query($sql);
         return $conexion->getFilasAfectadas();
     }
@@ -41,7 +41,7 @@
         $conexion->conectar();
         $email = trim($data['email']);
         $password = trim($data['password']);
-        $sql = "SELECT * FROM users WHERE email = '$email'";
+        $sql = "SELECT * FROM usuarios WHERE email = '$email'";
         $conexion->query($sql);
         $result = $conexion->getResult();
         $user = mysqli_fetch_assoc($result);
