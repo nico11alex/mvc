@@ -77,6 +77,7 @@ $documentos = $_SESSION['documentTypes'];
                 autocomplete="name"
               />
             </div>
+            <p class="field-error"></p>
             <?php if (isset($_SESSION['errors']["name"])){ ?>
               <p class="field-error">⚠ <?= $_SESSION['errors']['name'] ?></p>
             <?php } ?>
@@ -94,7 +95,8 @@ $documentos = $_SESSION['documentTypes'];
                   <?= $documento['name'] ?>
                 </option>
               <?php endforeach; ?>
-            </select>  
+            </select> 
+            <p class="field-error"></p>
             <?php if (isset($_SESSION['errors']["tipoDocument"])){ ?>
               <p class="field-error">⚠ <?= $_SESSION['errors']['tipoDocument'] ?></p>
             <?php } ?>
@@ -113,6 +115,7 @@ $documentos = $_SESSION['documentTypes'];
                 autocomplete="num_document"
               />
             </div>
+            <p class="field-error"></p>
             <?php if (isset($_SESSION['errors']["numDocument"])){ ?>
               <p class="field-error">⚠ <?= $_SESSION['errors']['numDocument'] ?></p>
             <?php } ?>
@@ -131,6 +134,7 @@ $documentos = $_SESSION['documentTypes'];
                 autocomplete="email"
               />
             </div>
+            <p class="field-error"></p>
             <?php if (isset($_SESSION['errors']["email"])){ ?>
               <p class="field-error">⚠ <?= $_SESSION['errors']["email"] ?></p>
             <?php } ?>
@@ -148,10 +152,19 @@ $documentos = $_SESSION['documentTypes'];
                 autocomplete="new-password"
               />
             </div>
+            <p class="field-error"></p>
             <?php if (isset($_SESSION['errors']["password"])){ ?>
               <p class="field-error">⚠ <?= $_SESSION['errors']["password"] ?></p>
             <?php } ?>
           </div>
+          <ul class="password-rules">
+            <li id="tamaño">Mínimo 8 caracteres</li>
+            <li id="mayuscula">Una mayúscula</li>
+            <li id="minuscula">Una minuscula</li>
+            <li id="numero">Un número</li>
+            <li id="caracter-especial">Un caracter especial</li>
+          </ul>
+          <br>
 
           <div class="form-field <?= isset($_SESSION['errors']['confirmPassword']) ? 'has-error' : '' ?>">
             <label for="confirmPassword">Confirmar contraseña</label>
@@ -165,6 +178,7 @@ $documentos = $_SESSION['documentTypes'];
                 autocomplete="new-password"
               />
             </div>
+            <p class="field-error"></p>
             <?php if (isset($_SESSION['errors']['confirmPassword'])){ ?>
               <p class="field-error">⚠ <?= $_SESSION['errors']['confirmPassword'] ?></p>
             <?php } ?>
@@ -179,5 +193,6 @@ $documentos = $_SESSION['documentTypes'];
     </div>
   </div>
 
+  <script src="views/js/register.js"></script>
 </body>
 </html>
