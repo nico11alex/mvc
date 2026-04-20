@@ -54,16 +54,27 @@
         return 0;
     }
 
-        public function validarOption() {
-            $conexion = new Conexion();
-            $conexion->conectar();
-            $sql = "SELECT (id) FROM tipos_de_documentos";  
-            $conexion->query($sql);
-            $result = $conexion->getResult();
-            $opcion =$result->fetch_all(MYSQLI_ASSOC);        
-            $conexion->desconectar();
-            return $opcion;
-        }
+    public function validarOption() {
+        $conexion = new Conexion();
+        $conexion->conectar();
+        $sql = "SELECT (id) FROM tipos_de_documentos";  
+        $conexion->query($sql);
+        $result = $conexion->getResult();
+        $opcion =$result->fetch_all(MYSQLI_ASSOC);        
+        $conexion->desconectar();
+        return $opcion;
+    }
+
+    public function nombreUsuario($data) {
+        $conexion = new Conexion();
+        $conexion->conectar();
+        $sql = "SELECT name FROM usuarios WHERE email = '{$data['email']}'";
+        $conexion->query($sql);
+        $result = $conexion->getResult();
+        $opcion =$result->fetch_all(MYSQLI_ASSOC);        
+        $conexion->desconectar();
+        return $opcion;
+    }
         
 
     }

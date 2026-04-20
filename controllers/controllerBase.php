@@ -132,9 +132,11 @@
             }
 
             
-            $_SESSION['successs'] = 'Bienvenido';
+            $_SESSION['nombre'] = $user->nombreUsuario($datos);
 
-            header('location: ' .SITE_URL. 'index.php');
+            
+
+            header('location: ' .SITE_URL. 'index.php?action=accesoConcedido');
             exit;
         }
 
@@ -147,6 +149,13 @@
             $_SESSION['documentTypes'] = $result->fetch_all(MYSQLI_ASSOC);        
             $conexion->desconectar();
             return $_SESSION['documentTypes'];
+        }
+
+        public function cerrarSesion(){
+            session_start();
+            session_destroy();
+            header('location: ' .SITE_URL. 'index.php');
+            exit;
         }
     }
 ?>

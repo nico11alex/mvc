@@ -19,6 +19,12 @@ if(isset($_GET['action'])){
     if($_GET['action']=='confirmLogin'){
         $controllerBase->logear($_POST);
     }
+    if($_GET['action']=='accesoConcedido'){
+        $controllerBase->verPagina('views/html/reservas.php');
+    }
+    if($_GET['action']=='signOut'){
+        $controllerBase->cerrarSesion();
+    }
 }else{
     $controllerBase->verPagina('views/html/home.php');
 }

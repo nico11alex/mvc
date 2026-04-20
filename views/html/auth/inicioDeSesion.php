@@ -4,17 +4,18 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Élara – Iniciar Sesión</title>
+  <link rel="stylesheet" href="views/style/style1.css?v=10001" />
   <link rel="stylesheet" href="views/style/style2.css?v=10000" />
   <link rel="stylesheet" href="views/style/style3.css" />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet"/>
 </head>
 <body>
 
-  <nav>
-    <div class="logo">
-      <span class="logo-diamond"></span>
-      Élara
-    </div>
+  <nav class="navbar">
+    <a href="index.php" class="nav-logo">
+      <span class="logo-icon">◈</span>
+      <span>Élara</span>
+    </a>
   </nav>
 
   <div class="split">
