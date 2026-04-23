@@ -30,8 +30,8 @@
     public function registerUser($data){
         $conexion = new Conexion();
         $conexion->conectar();
-        $sql = "INSERT INTO usuarios(name,tipos_de_documentos,num_document,email,password)
-        VALUES ('$data[name]','$data[tipoDocument]','$data[numDocument]','$data[email]','$data[password]')";
+        $sql = "INSERT INTO usuarios(name,tipos_de_documentos,num_document,email,password,id_rol,estado)
+        VALUES ('$data[name]','$data[tipoDocument]','$data[numDocument]','$data[email]','$data[password]',3,'Activo')";
         $conexion->query($sql);
         return $conexion->getFilasAfectadas();
     }
@@ -75,7 +75,30 @@
         $conexion->desconectar();
         return $opcion;
     }
-        
+
+    public function crearReserva($data){
+        $conexion = new Conexion();
+        $conexion->conectar();
+        $sql = "INSERT INTO habitaciones(name,tipos_de_documentos,num_document,email,password,id_rol,estado)
+        VALUES ('$data[name]','$data[tipoDocument]','$data[numDocument]','$data[email]','$data[password]',3,'Activo')";
+        $conexion->query($sql);
+        return $conexion->getFilasAfectadas();
+    }
+
+    public function getMetodosPago() {
+        $conexion = new Conexion();
+        $conexion->conectar();
+
+        $sql = "SELECT id, name FROM metodos_de_pago";
+        $conexion->query($sql);
+
+        $result = $conexion->getResult();
+        $metodos = $result->fetch_all(MYSQLI_ASSOC);
+
+        $conexion->desconectar();
+
+        return $metodos;
+    }
 
     }
 ?>

@@ -150,6 +150,7 @@ $documentos = $_SESSION['documentTypes'];
                 name="password"
                 placeholder="Mínimo 8 caracteres"
                 autocomplete="new-password"
+                class="<?= isset($_SESSION['errorEmail']) ? 'backend-error' : '' ?>"
               />
             </div>
             <p class="field-error"></p>

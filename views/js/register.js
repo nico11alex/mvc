@@ -40,7 +40,9 @@ document.addEventListener("DOMContentLoaded", ()=> {
         const value = email.value.trim();
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-        if (value === "") {
+        if (email.classList.contains("backend-error")) {
+            setError(email, "El correo ya está registrado");
+        }else if (value === "") {
             setError(email, "El correo es obligatorio");
         }else if (!emailRegex.test(value)) {
             setError(email, "Correo no valido");
@@ -116,17 +118,27 @@ document.addEventListener("DOMContentLoaded", ()=> {
 
         const inputs = [name, email, password, confirmPassword, tipoDocument, numDocument];
 
-        inputs.forEach(input => {
+        iinputs.forEach(input => {
             const field = input.closest(".form-field");
 
-            if (!field.classList.contains("is-valid")) {
+            if (field.classList.contains("has-error")) {
                 errores = true;
             }
         });
-
         if (errores) {
             e.preventDefault();
         }
 
     });
+
+    function validarInicial() {
+        name.dispatchEvent(new Event("input"));
+        email.dispatchEvent(new Event("input"));
+        password.dispatchEvent(new Event("input"));
+        confirmPassword.dispatchEvent(new Event("input"));
+        tipoDocument.dispatchEvent(new Event("change"));
+        numDocument.dispatchEvent(new Event("input"));
+    }
+
+    validarInicial();
 });

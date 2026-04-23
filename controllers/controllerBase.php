@@ -121,6 +121,7 @@
         public function logear($datos){
             unset($_SESSION['errors']);
             unset($_SESSION['success']);
+            unset($_SESSION['documentTypes']);
 
             $user = new User();
             $loginCorrecto = $user->validateLog($datos);
@@ -149,6 +150,28 @@
             $_SESSION['documentTypes'] = $result->fetch_all(MYSQLI_ASSOC);        
             $conexion->desconectar();
             return $_SESSION['documentTypes'];
+        }
+
+        public function habitaciones(){
+            $conexion = new Conexion();
+            $conexion->conectar();
+            $sql = "SELECT * FROM habitaciones";  
+            $conexion->query($sql);
+            $result = $conexion->getResult();
+            $_SESSION['habitaciones'] = $result->fetch_all(MYSQLI_ASSOC);        
+            $conexion->desconectar();
+            return $_SESSION['habitaciones'];
+        }
+
+        public function reservar($datos){
+            $user = new User();
+            $crear = $user->crearReserva($datos);
+        }
+
+        public function metodoDePago(){
+            $user = new User();
+            $_SESSION['metodoPago'] = $user->getMetodosPago();
+            return $_SESSION['metodoPago'];
         }
 
         public function cerrarSesion(){
