@@ -68,7 +68,7 @@
     public function nombreUsuario($data) {
         $conexion = new Conexion();
         $conexion->conectar();
-        $sql = "SELECT name FROM usuarios WHERE email = '{$data['email']}'";
+        $sql = "SELECT id ,name FROM usuarios WHERE email = '{$data['email']}'";
         $conexion->query($sql);
         $result = $conexion->getResult();
         $opcion =$result->fetch_all(MYSQLI_ASSOC);        
@@ -76,13 +76,19 @@
         return $opcion;
     }
 
-    public function crearReserva($data){
+    public function crearReserva($data,$id){
         $conexion = new Conexion();
         $conexion->conectar();
-        $sql = "INSERT INTO habitaciones(name,tipos_de_documentos,num_document,email,password,id_rol,estado)
-        VALUES ('$data[name]','$data[tipoDocument]','$data[numDocument]','$data[email]','$data[password]',3,'Activo')";
+        $sql = "INSERT INTO reservas(id_users,id_habitacion,fecha_inicio,fecha_final,num_personas,estado,precio,id_metodo_pago)
+        VALUES ($id)";
         $conexion->query($sql);
-        return $conexion->getFilasAfectadas();
+
+        $result = $conexion->getResult();
+        $metodos = $result->fetch_all(MYSQLI_ASSOC);
+
+        $conexion->desconectar();
+
+        return $metodos;
     }
 
     public function getMetodosPago() {

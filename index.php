@@ -26,11 +26,11 @@ if(isset($_GET['action'])){
         $controllerBase->cerrarSesion();
     }
     if($_GET['action']=='getFormReservar'){
-        $controllerBase->habitaciones();  
+        $controllerBase->habitaciones();
+        $controllerBase->metodoDePago();  
         $controllerBase->verPagina('views/html/reservar.php');
     }
     if($_GET['action']=='createReserva'){
-        $controllerBase->metodoDePago();
         $controllerBase->reservar($_POST);
     }
 }else{

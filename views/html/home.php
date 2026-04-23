@@ -35,9 +35,6 @@
         Sumérgete en una experiencia de hospitalidad inigualable<br/>en el corazón de la naturaleza colombiana.
       </p>
     </div>
-    <?php  
-    print_r($_SESSION);
-    ?>
     <div class="booking-widget">
       <div class="widget-header">
         <span>◈</span> Busca tu estadía perfecta

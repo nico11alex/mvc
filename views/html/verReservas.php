@@ -1,6 +1,6 @@
 <?php
 
-$nombreUsuario = $_SESSION['nombre'][0]['name'];
+$nombreUsuario = $_SESSION['datosUsuario'][0]['name'];
 
 ?>
 <!DOCTYPE html>

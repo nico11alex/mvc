@@ -131,14 +131,4 @@ document.addEventListener("DOMContentLoaded", ()=> {
 
     });
 
-    function validarInicial() {
-        name.dispatchEvent(new Event("input"));
-        email.dispatchEvent(new Event("input"));
-        password.dispatchEvent(new Event("input"));
-        confirmPassword.dispatchEvent(new Event("input"));
-        tipoDocument.dispatchEvent(new Event("change"));
-        numDocument.dispatchEvent(new Event("input"));
-    }
-
-    validarInicial();
 });

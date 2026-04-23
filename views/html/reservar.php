@@ -1,5 +1,5 @@
 <?php
-$nombreUsuario = $_SESSION['nombre'][0]['name'];
+$nombreUsuario = $_SESSION['datosUsuario'][0]['name'];
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -12,7 +12,7 @@ $nombreUsuario = $_SESSION['nombre'][0]['name'];
   <link
     href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400;500&display=swap"
     rel="stylesheet" />
-  <link rel="stylesheet" href="views/style/style5.css?v=1"">
+  <link rel="stylesheet" href="views/style/style5.css?v=1">
 </head>
 <body>
 
@@ -71,7 +71,6 @@ $nombreUsuario = $_SESSION['nombre'][0]['name'];
       <form id="reservaForm" action="<?=SITE_URL ?>index.php?action=createReserva" method="POST" novalidate>
 
         <!-- ── PASO 1: FECHAS ── -->
-        <?php print_r($_SESSION['metodoPago']);?>
         <div id="step1">
           <div class="card">
             <p class="card-title">Selección de fechas y huéspedes</p>
@@ -156,14 +155,13 @@ $nombreUsuario = $_SESSION['nombre'][0]['name'];
 
             <?php foreach($metodos as $metodo): ?>
 
-              <label class="metodo-card"
-                onclick="selectMetodo(this, <?= $metodo['id'] ?>, '<?= $metodo['nombre'] ?>')">
+              <label class="metodo-card" onclick="selectMetodo(this)">
 
                 <input type="radio" name="id_metodo_pago" value="<?= $metodo['id'] ?>">
 
                 <div class="metodo-icon">💳</div> <!-- puedes mejorar esto luego -->
-                <div class="metodo-nombre"><?= $metodo['nombre'] ?></div>
-                <div class="metodo-desc">Pago con <?= $metodo['nombre'] ?></div>
+                <div class="metodo-nombre"><?= $metodo['name'] ?></div>
+                <div class="metodo-desc">Pago con <?= $metodo['name'] ?></div>
 
               </label>
 
@@ -245,6 +243,16 @@ $nombreUsuario = $_SESSION['nombre'][0]['name'];
   </div>
 
   <script>
+    function selectMetodo(element) {
+      document.querySelectorAll('.metodo-card').forEach(card => {
+        card.classList.remove('active');
+      });
+
+      element.classList.add('active');
+
+      const radio = element.querySelector('input');
+      radio.checked = true;
+    }
     /* ── Estado ─────────────────────────────────── */
     let selRoom = { num: '101', tipo: 'Deluxe King', precio: 320000 };
     const today = new Date().toISOString().split('T')[0];

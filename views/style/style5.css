@@ -472,3 +472,68 @@
     }
     .section-gap { margin-top: 24px; }
   
+    .metodo-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  margin-top: 10px;
+}
+
+.metodo-card {
+  background: rgba(255,255,255,0.5);
+  border: 0.5px solid var(--border);
+  border-radius: 4px;
+  padding: 22px 16px;
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.2s;
+  position: relative;
+}
+
+.metodo-card:hover {
+  border-color: #b0a090;
+  background: rgba(255,255,255,0.8);
+}
+
+.metodo-card input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.metodo-icon {
+  font-size: 28px;
+  margin-bottom: 10px;
+  opacity: 0.7;
+}
+
+.metodo-nombre {
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--text-dark);
+  font-weight: 500;
+  margin-bottom: 6px;
+}
+
+.metodo-desc {
+  font-size: 11px;
+  color: var(--text-muted);
+  font-weight: 300;
+}
+
+/* estado seleccionado (igual que habitaciones) */
+.metodo-card.active {
+  border-color: var(--gold);
+  background: rgba(201,168,76,0.07);
+}
+
+.metodo-card.active::after {
+  content: '✓';
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  font-size: 12px;
+  color: var(--gold);
+  font-weight: 500;
+}

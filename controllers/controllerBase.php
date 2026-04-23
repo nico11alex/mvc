@@ -43,7 +43,7 @@
             $resultado = $user->registerUser($datos);
             if($resultado>0){
                 $_SESSION['success'] = 'Usuario registrado exitosamente';
-                header('location: ' .SITE_URL. 'index.php?action=getFormRegisterUser');
+                header('location: ' .SITE_URL. 'index.php?action=getFormLogin');
                 exit;
 
             }else{
@@ -83,7 +83,7 @@
                 $Errores["numDocument"] = "El número de documento es obligatoria";
             }elseif(!filter_var($numDocument,FILTER_VALIDATE_INT)){
                 $Errores["numDocument"] = "El número de documento " .$numDocument. " no es un número";
-            }elseif(strlen($numDocument)!=10){
+            }elseif(strlen($numDocument)<6){
                 $Errores["numDocument"] = "El número de documento no tiene la cantidad de números correcta revisa";
             }elseif((int)$numDocument<0){
                 $Errores["numDocument"] = "El número de documento no tiene el formato adecuado recuerda solo poner números";
@@ -133,7 +133,7 @@
             }
 
             
-            $_SESSION['nombre'] = $user->nombreUsuario($datos);
+            $_SESSION['datosUsuario'] = $user->nombreUsuario($datos);
 
             
 
@@ -164,8 +164,11 @@
         }
 
         public function reservar($datos){
+            $id = $_SESSION['datosUsuario'][0]['id'];
+            print_r($_SESSION);
+            die();
             $user = new User();
-            $crear = $user->crearReserva($datos);
+            $crear = $user->crearReserva($datos,$id);
         }
 
         public function metodoDePago(){
