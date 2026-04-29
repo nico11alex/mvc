@@ -35,7 +35,7 @@
         <?php } ?>
         
         <form method="POST" action="index.php?action=confirmLogin">
-          <div class="form-field <?= isset($_SESSION['errors']) ? 'has-error' : '' ?>">
+          <div class="form-field <?= isset($_SESSION['errorsLogin']) ? 'has-error' : '' ?>">
             <div class="field" id="field-email">
               <label class="field-label" for="email">Correo electrónico</label>
               <div class="input-wrap">
@@ -43,8 +43,8 @@
                 <input type="email" id="email" name="email"
                       placeholder="tucorreo@ejemplo.com" autocomplete="email"/>
               </div>
-              <?php if (isset($_SESSION['errors'])){ ?>
-                <p class="field-error">⚠ <?= $_SESSION['errors'] ?></p>
+              <?php if (isset($_SESSION['errorsLogin'])){ ?>
+                <p class="field-error">⚠ <?= $_SESSION['errorsLogin'] ?></p>
               <?php } ?>
             </div>
           </div>
@@ -56,8 +56,8 @@
               <input type="password" id="password" name="password"
                      placeholder="Tu contraseña" autocomplete="current-password"/>
             </div>
-            <?php if (isset($_SESSION['errors'])){ ?>
-                <p class="field-error">⚠ <?= $_SESSION['errors'] ?></p>
+            <?php if (isset($_SESSION['errorsLogin'])){ ?>
+                <p class="field-error">⚠ <?= $_SESSION['errorsLogin'] ?></p>
               <?php } ?>
           </div>
 

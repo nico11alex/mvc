@@ -35,6 +35,13 @@ class Conexion{
         return $this->filasAfectadas;    
     }
 
+    public function queryPreparada($sql, $tipos, ...$params){
+        $stmt = $this->mySQLI->prepare($sql);
+        $stmt->bind_param($tipos, ...$params);
+        $stmt->execute();
+        $this->result = $stmt->get_result();
+        $this->filasAfectadas = $stmt->affected_rows;
+}
 
 }
 ?>

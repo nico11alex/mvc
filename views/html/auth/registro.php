@@ -1,6 +1,3 @@
-<?php
-$documentos = $_SESSION['documentTypes'];
-?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -89,7 +86,7 @@ $documentos = $_SESSION['documentTypes'];
               <?php if (empty($_SESSION['old']['tipoDocument'])): ?>
                 <option value="">Seleccione un tipo de documento</option>
               <?php endif ?>
-              <?php foreach($documentos as $documento): ?>
+              <?php foreach($tiposDocumento as $documento): ?>
                 <option value="<?= $documento['id'] ?>"
                   <?= (($_SESSION['old']['tipoDocument'] ?? '') == $documento['id']) ? 'selected' : '' ?>>
                   <?= $documento['name'] ?>

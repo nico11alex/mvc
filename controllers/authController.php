@@ -1,9 +1,5 @@
 <?php
-    class ControllerBase{
-        public function verPagina($pagina){
-            include_once $pagina;
-        }
-
+    class AuthController{
         public function registerUser($datos){
             unset($_SESSION['errors']);
             unset($_SESSION['old']);
@@ -119,7 +115,7 @@
         }
 
         public function logear($datos){
-            unset($_SESSION['errors']);
+            unset($_SESSION['errorsLogin']);
             unset($_SESSION['success']);
             unset($_SESSION['documentTypes']);
 
@@ -127,61 +123,22 @@
             $loginCorrecto = $user->validateLog($datos);
 
             if($loginCorrecto === 0){
-                $_SESSION['errors'] = "Las credenciales son incorrectas";
+                $_SESSION['errorsLogin'] = "Las credenciales son incorrectas";
                 header('location: ' .SITE_URL. 'index.php?action=getFormLogin');
                 exit;
             }
-
             
             $_SESSION['datosUsuario'] = $user->nombreUsuario($datos);
 
-            
-
-            header('location: ' .SITE_URL. 'index.php?action=accesoConcedido');
+            header('location: ' .SITE_URL. 'index.php?action=misReservas');
             exit;
         }
 
-        public function index() {
-            $conexion = new Conexion();
-            $conexion->conectar();
-            $sql = "SELECT * FROM tipos_de_documentos";  
-            $conexion->query($sql);
-            $result = $conexion->getResult();
-            $_SESSION['documentTypes'] = $result->fetch_all(MYSQLI_ASSOC);        
-            $conexion->desconectar();
-            return $_SESSION['documentTypes'];
-        }
-
-        public function habitaciones(){
-            $conexion = new Conexion();
-            $conexion->conectar();
-            $sql = "SELECT * FROM habitaciones";  
-            $conexion->query($sql);
-            $result = $conexion->getResult();
-            $_SESSION['habitaciones'] = $result->fetch_all(MYSQLI_ASSOC);        
-            $conexion->desconectar();
-            return $_SESSION['habitaciones'];
-        }
-
-        public function reservar($datos){
-            $id = $_SESSION['datosUsuario'][0]['id'];
-            print_r($_SESSION);
-            die();
+        public function traerTiposDocumentos(){
             $user = new User();
-            $crear = $user->crearReserva($datos,$id);
+            $tiposDocumento = $user->index();
+            include "views/html/auth/registro.php";
         }
 
-        public function metodoDePago(){
-            $user = new User();
-            $_SESSION['metodoPago'] = $user->getMetodosPago();
-            return $_SESSION['metodoPago'];
-        }
-
-        public function cerrarSesion(){
-            session_start();
-            session_destroy();
-            header('location: ' .SITE_URL. 'index.php');
-            exit;
-        }
     }
 ?>

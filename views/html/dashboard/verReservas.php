@@ -1,7 +1,5 @@
 <?php
-
 $nombreUsuario = $_SESSION['datosUsuario'][0]['name'];
-
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -94,7 +92,24 @@ $nombreUsuario = $_SESSION['datosUsuario'][0]['name'];
                         </tr>
                     </thead>
                     <tbody id="tbody">
-                        <!-- Las filas se renderizan con JS (o con PHP en tu MVC) -->
+                        <?php if(empty($reservas)): ?>
+                            <script>document.getElementById('emptyState').style.display='block'; document.getElementById('tableWrap').style.display='none';</script>
+                        <?php else: ?>
+                            <?php foreach($reservas as $r): ?>
+                            <tr>
+                                <td>Habitación <?= $r['num_habitacion'] ?></td>
+                                <td><?= $r['fecha_inicio'] ?></td>
+                                <td><?= $r['fecha_final'] ?></td>
+                                <td><?= $r['estado'] ?></td>
+                                <td>
+                                    <a href="index.php?action=editarReserva&id=<?= $r['id'] ?>">
+                                        <button class="btn-edit">Modificar</button>
+                                    </a>
+                                    <button class="btn-delete" onclick="openModal(<?= $r['id'] ?>)">Cancelar</button>
+                                </td>
+                            </tr>
+                            <?php endforeach; ?>
+                        <?php endif; ?>
                     </tbody>
                 </table>
             </div>

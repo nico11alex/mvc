@@ -76,34 +76,15 @@
         return $opcion;
     }
 
-    public function crearReserva($data,$id){
+    public function index() {
         $conexion = new Conexion();
         $conexion->conectar();
-        $sql = "INSERT INTO reservas(id_users,id_habitacion,fecha_inicio,fecha_final,num_personas,estado,precio,id_metodo_pago)
-        VALUES ($id)";
+        $sql = "SELECT * FROM tipos_de_documentos";  
         $conexion->query($sql);
-
         $result = $conexion->getResult();
-        $metodos = $result->fetch_all(MYSQLI_ASSOC);
-
+        $_SESSION['documentTypes'] = $result->fetch_all(MYSQLI_ASSOC);        
         $conexion->desconectar();
-
-        return $metodos;
-    }
-
-    public function getMetodosPago() {
-        $conexion = new Conexion();
-        $conexion->conectar();
-
-        $sql = "SELECT id, name FROM metodos_de_pago";
-        $conexion->query($sql);
-
-        $result = $conexion->getResult();
-        $metodos = $result->fetch_all(MYSQLI_ASSOC);
-
-        $conexion->desconectar();
-
-        return $metodos;
+        return $_SESSION['documentTypes'];
     }
 
     }

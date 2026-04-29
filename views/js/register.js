@@ -1,5 +1,4 @@
 document.addEventListener("DOMContentLoaded", ()=> {
-
     const form = document.querySelector(".reg-form");
     const name = document.querySelector("#name");
     const email = document.querySelector("#email");

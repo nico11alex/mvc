@@ -2,39 +2,64 @@
 session_start();
 require_once 'models/conexion.php';
 require_once 'config/config.php';
-require_once 'controllers/controllerBase.php';
+require_once 'controllers/authController.php';
+require_once 'controllers/reservaController.php';
+require_once 'controllers/controlController.php';
 require_once 'models/user.php';
-$controllerBase = new ControllerBase();
+require_once 'models/reserva.php';
+$authController = new AuthController();
+$control = new Control();
+$reservaController = new ReservarController();
+
 if(isset($_GET['action'])){
     if($_GET['action']=='getFormRegisterUser'){
-        $controllerBase->index();
-        $controllerBase->verPagina('views/html/auth/registro.php');
+        $authController->traerTiposDocumentos();
+        $control->verPagina('views/html/auth/registro.php');
     }
     if($_GET['action']=='registerUser'){
-        $controllerBase->registerUser($_POST);
+        $authController->registerUser($_POST);
     }
     if($_GET['action']=='getFormLogin'){
-        $controllerBase->verPagina('views/html/auth/inicioDeSesion.php');
+        $control->verPagina('views/html/auth/inicioDeSesion.php');
     }
     if($_GET['action']=='confirmLogin'){
-        $controllerBase->logear($_POST);
+        $authController->logear($_POST);
     }
     if($_GET['action']=='accesoConcedido'){
-        $controllerBase->verPagina('views/html/verReservas.php');
+        $control->verPagina('views/html/dashboard/verReservas.php');
     }
     if($_GET['action']=='signOut'){
-        $controllerBase->cerrarSesion();
+        $control->cerrarSesion();
     }
     if($_GET['action']=='getFormReservar'){
-        $controllerBase->habitaciones();
-        $controllerBase->metodoDePago();  
-        $controllerBase->verPagina('views/html/reservar.php');
+        $categorias = $reservaController->obtenerCategorias();
+        $metodos = $reservaController->metodoDePago();
+        include 'views/html/dashboard/reservar.php';
     }
     if($_GET['action']=='createReserva'){
-        $controllerBase->reservar($_POST);
+        $reservaController->reservar($_POST);
+    }
+    if($_GET['action']=='getHabitaciones'){
+        $reservaController->getHabitaciones();
+    }
+    if($_GET['action']=='rooms'){
+        $reservaController->habitaciones();
+    }
+    if($_GET['action']=='misReservas'){
+        $reservas = $reservaController->misReservas();
+        include 'views/html/dashboard/verReservas.php';
+    }
+    if($_GET['action']=='editarReserva'){
+        $categorias = $reservaController->obtenerCategorias();
+        $metodos = $reservaController->metodoDePago();
+        $reserva = $reservaController->getReservaById($_GET['id']);
+        include 'views/html/dashboard/updateReserva.php';
+    }
+    if($_GET['action']=='updateReserva'){
+        $reservaController->actualizarReserva($_POST);
     }
 }else{
-    $controllerBase->verPagina('views/html/home.php');
+    $control->verPagina('views/html/dashboard/home.php');
 }
 
 ?>
