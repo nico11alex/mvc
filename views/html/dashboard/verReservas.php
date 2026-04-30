@@ -105,7 +105,9 @@ $nombreUsuario = $_SESSION['datosUsuario'][0]['name'];
                                     <a href="index.php?action=editarReserva&id=<?= $r['id'] ?>">
                                         <button class="btn-edit">Modificar</button>
                                     </a>
-                                    <button class="btn-delete" onclick="openModal(<?= $r['id'] ?>)">Cancelar</button>
+                                    <a href="index.php?action=cancelarReserva&id=<?= $r['id'] ?>">
+                                        <button class="btn-delete">Cancelar</button>
+                                    </a>
                                 </td>
                             </tr>
                             <?php endforeach; ?>
@@ -116,21 +118,6 @@ $nombreUsuario = $_SESSION['datosUsuario'][0]['name'];
 
         </main>
     </div>
-
-    <!-- MODAL ELIMINAR -->
-    <div class="modal-bg" id="modalBg">
-        <div class="modal">
-            <div class="modal-icon">⚠</div>
-            <h3>Eliminar reserva</h3>
-            <p>¿Estás seguro de que deseas eliminar esta reserva?<br />Esta acción no se puede deshacer.</p>
-            <div class="modal-actions">
-                <button class="btn-cancel-m" onclick="closeModal()">Cancelar</button>
-                <button class="btn-delete-m" id="confirmDelete">Sí, eliminar</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- TOAST -->
     <div class="toast" id="toast"></div>
 
     </body>

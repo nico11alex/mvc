@@ -58,6 +58,9 @@ if(isset($_GET['action'])){
     if($_GET['action']=='updateReserva'){
         $reservaController->actualizarReserva($_POST);
     }
+    if($_GET['action']=='cancelarReserva'){
+        $reservaController->cancelarReserva($_GET['id']);
+    }
 }else{
     $control->verPagina('views/html/dashboard/home.php');
 }

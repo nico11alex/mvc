@@ -49,9 +49,6 @@ $nombreUsuario = $_SESSION['datosUsuario'][0]['name'];
         <input type="hidden" name="id" value="<?= $reserva['id'] ?>">
         <div class="card">
             <p class="card-title">Modificar reserva</p>
-            <?php
-            print_r($reserva);
-            ?>
             <div class="grid-2">
             <div class="field">
                 <label>Fecha de llegada <span class="req">*</span></label>
@@ -76,7 +73,7 @@ $nombreUsuario = $_SESSION['datosUsuario'][0]['name'];
             <div class="field">
                 <label>Habitación <span class="req">*</span></label>
                 <select name="habitacion_id" id="habitacion_id">
-                  <option value="<?= $reserva['id_habitacion'] ?>" selected>Habitación actual</option>
+                  <option value="<?= $reserva['id_habitacion'] ?>" selected>Habitación <?= htmlspecialchars($reserva['num_habitacion']) ?></option>
                 </select>
             </div>
             <div class="field">

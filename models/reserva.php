@@ -38,7 +38,7 @@ class Reserva{
         $sql = "SELECT r.id, h.num_habitacion, r.fecha_inicio, r.fecha_final, r.estado 
         FROM reservas r 
         JOIN habitaciones h ON r.id_habitacion = h.id 
-        WHERE r.id_users = $id";
+        WHERE r.id_users = $id and r.estado = 'realizado'";
         $conexion->query($sql);
         $result = $conexion->getResult();
         $_SESSION['reservas'] = $result->fetch_all(MYSQLI_ASSOC);
@@ -84,16 +84,30 @@ class Reserva{
     public function getById($id){
         $conexion = new Conexion();
         $conexion->conectar();
-        $conexion->queryPreparada("SELECT r.id,r.fecha_inicio,r.fecha_final,r.num_personas,r.estado,r.precio,h.num_habitacion,c.id as id_categoria,c.name
+        $conexion->queryPreparada("SELECT r.id,r.fecha_inicio,r.fecha_final,r.num_personas,r.estado,r.precio,h.id as id_habitacion,h.num_habitacion,c.id as id_categoria,c.name, r.id_metodo_pago,m.name
             FROM reservas r 
             JOIN habitaciones h
             ON r.id_habitacion = h.id 
             JOIN categorias c
             ON h.id_categorias = c.id
+            JOIN metodos_de_pago m
+            ON r.id_metodo_pago = m.id
             WHERE r.id = ?", 'i', $id);
         $result = $conexion->getResult()->fetch_assoc();
         $conexion->desconectar();
         return $result;
+    }
+
+    public function cambiarACancelado($id){
+        $conexion = new Conexion();
+        $conexion->conectar();
+        $conexion->queryPreparada(
+            "UPDATE reservas SET estado = ? WHERE id=?",
+            'si', "Cancelado",$id
+        );
+        $filas = $conexion->getFilasAfectadas();
+        $conexion->desconectar();
+        return $filas > 0;
     }
 }
 ?>

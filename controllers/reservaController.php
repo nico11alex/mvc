@@ -55,6 +55,12 @@ class ReservarController{
             echo json_encode(['ok' => true, 'data' => $habitaciones]);
         }
 
+        public function cancelarReserva($id){
+            $reserva = new Reserva();
+            $reserva->cambiarACancelado($id);
+            header('Location: index.php?action=misReservas');
+        }
+
 }
 
 ?>
