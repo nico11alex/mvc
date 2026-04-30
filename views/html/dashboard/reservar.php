@@ -1,6 +1,9 @@
 <?php
 $nombreUsuario = $_SESSION['datosUsuario'][0]['name'];
+$errores = $_SESSION['errores_reserva'] ?? [];
+unset($_SESSION['errores_reserva']);
 ?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -11,7 +14,7 @@ $nombreUsuario = $_SESSION['datosUsuario'][0]['name'];
   <link
     href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400;500&display=swap"
     rel="stylesheet" />
-  <link rel="stylesheet" href="views/style/style5.css?v=4">
+  <link rel="stylesheet" href="views/style/style5.css?v=6">
 </head>
 <body>
 
@@ -49,37 +52,50 @@ $nombreUsuario = $_SESSION['datosUsuario'][0]['name'];
       <h1 class="page-title">Nueva reserva</h1>
 
       <form id="reservaForm" action="<?=SITE_URL ?>index.php?action=createReserva" method="POST" novalidate>
-
-        <div class="card">
+      <div class="card">
           <p class="card-title">Nueva reserva</p>
           <div class="grid-2">
             <div class="field">
               <label for="fecha_inicio">Fecha de llegada <span class="req">*</span></label>
-              <input type="date" id="fecha_inicio" name="fecha_inicio" required />
+              <input type="date" id="fecha_inicio" name="fecha_inicio" value="<?= htmlspecialchars($_SESSION['old']['fecha_inicio'] ?? '') ?>" required />
+              <?php if(isset($errores['fecha_inicio'])): ?>
+                <span><?= $errores['fecha_inicio'] ?></span>
+              <?php endif; ?>
             </div>
             <div class="field">
               <label for="fecha_fin">Fecha de salida <span class="req">*</span></label>
-              <input type="date" id="fecha_fin" name="fecha_fin" required />
+              <input type="date" id="fecha_fin" name="fecha_fin" value="<?= htmlspecialchars($_SESSION['old']['fecha_fin'] ?? '') ?>" required />
+              <?php if(isset($errores['fecha_final'])): ?>
+                <span><?= $errores['fecha_final'] ?></span>
+              <?php endif; ?>
             </div>
             <div class="field">
               <label for="adultos">Adultos <span class="req">*</span></label>
               <select id="adultos" name="adultos" required>
-                <option value="">Seleccionar</option>
-                <option value="1">1 adulto</option>
-                <option value="2" selected>2 adultos</option>
-                <option value="3">3 adultos</option>
-                <option value="4">4 adultos</option>
+                <?php $antiguoAdultos = $_SESSION['old']['adultos'] ?? ''; ?>
+                <option value="" <?php echo ($antiguoAdultos == "") ? 'selected' : ''; ?>>Seleccionar</option>
+                <option value="1" <?php echo ($antiguoAdultos == "1") ? 'selected' : ''; ?>>1 adulto</option>
+                <option value="2" <?php echo ($antiguoAdultos == "2") ? 'selected' : ''; ?>>2 adultos</option>
+                <option value="3" <?php echo ($antiguoAdultos == "3") ? 'selected' : ''; ?>>3 adultos</option>
+                <option value="4" <?php echo ($antiguoAdultos == "4") ? 'selected' : ''; ?>>4 adultos</option>
               </select>
+              
+          
+              <?php if(isset($errores['adultos'])): ?>
+                  <span><?= $errores['adultos'] ?></span>
+              <?php endif; ?>
             </div>
             <div class="field">
               <label for="menores">Menores de edad</label>
               <select id="menores" name="menores">
-                <option value="0" selected>Ninguno</option>
-                <option value="1">1 menor</option>
-                <option value="2">2 menores</option>
-                <option value="3">3 menores</option>
+                <?php $antiguo = $_SESSION['old']['menores'] ?? '0'; ?>
+                <option value="0" <?php echo ($antiguo == "0") ? 'selected' : ''; ?>>Ninguno</option>
+                <option value="1" <?php echo ($antiguo == "1") ? 'selected' : ''; ?>>1 menor</option>
+                <option value="2" <?php echo ($antiguo == "2") ? 'selected' : ''; ?>>2 menores</option>
+                <option value="3" <?php echo ($antiguo == "3") ? 'selected' : ''; ?>>3 menores</option>
               </select>
             </div>
+
             <div class="field">
               <label for="categoria_id">Categoría de habitación <span class="req">*</span></label>
               <select id="categoria_id" name="categoria_id" required>
@@ -88,12 +104,19 @@ $nombreUsuario = $_SESSION['datosUsuario'][0]['name'];
                   <option value="<?= $cat['id'] ?>"><?= $cat['name'] ?> - <?= $cat['description'] ?></option>
                 <?php endforeach; ?>
               </select>
+              <?php if(isset($errores['categorias'])): ?>
+                  <span><?= $errores['categorias'] ?></span>
+              <?php endif; ?>
             </div>
+
             <div class="field" id="habitacion-select-wrap" style="margin-top:1rem;">
               <label for="habitacion_id">Habitación <span class="req">*</span></label>
               <select id="habitacion_id" name="habitacion_id">
                 <option value="">Seleccione una habitacion</option>
               </select>
+              <?php if(isset($errores['habitacion_id'])): ?>
+                  <span><?= $errores['habitacion_id'] ?></span>
+              <?php endif; ?>
             </div>
 
             <div class="field">
@@ -104,79 +127,21 @@ $nombreUsuario = $_SESSION['datosUsuario'][0]['name'];
                   <option value="<?= $metodo['id'] ?>"><?= $metodo['name'] ?></option>
                 <?php endforeach; ?>
               </select>
+              <?php if(isset($errores['id_metodo_pago'])): ?>
+                  <span><?= $errores['id_metodo_pago'] ?></span>
+              <?php endif; ?>
             </div>
           </div>
-      </form>
-
-      <!-- SUCCESS -->
-      <div class="success-screen" id="successScreen">
-
-            <div class="room-grid" id="roomGrid">
-              
-                
-                <?php if (empty($categorias)): ?>
-                <p>No hay categorias disponibles</p>
-                <?php else: ?>
-
-                <?php foreach($categorias as $hab): ?>
-                    <label class="room-card" onclick="selectCategoria(this, '<?= $hab['id'] ?>')">
-                      <input type="radio" name="categoria_id" value="<?= $hab['id'] ?>">
-                      <div class="room-num"><?= $hab['description'] ?></div>
-                    </label>
-                <?php endforeach; ?>
-
-                <?php endif; ?>
-
-            </div>
-            <p class="card-title">Elige tu metodo de pago</p>
-            <div class="metodo-grid">
-              
-
-            <?php foreach($metodos as $metodo): ?>
-
-              <label class="metodo-card" onclick="selectMetodo(this)">
-
-                <input type="radio" name="id_metodo_pago" value="<?= $metodo['id'] ?>">
-
-                <div class="metodo-icon">💳</div>
-                <div class="metodo-nombre"><?= $metodo['name'] ?></div>
-              </label>
-
-            <?php endforeach; ?>
-
-            </div>
-            
-            <span class="field-error section-gap" id="err-habitacion">
-              Selecciona una habitación
-            </span>
-          </div>
-
-
           <div class="form-actions">
-            <button type="button" class="btn-secondary" onclick="goStep(1)">← Atrás</button>
-            <button type="button" class="btn-primary" onclick="goStep(3)">
-              Revisar reserva →
-            </button>
+              <button type="submit">
+                Revisar reserva →
+              </button>
+            </div>
           </div>
-        </div>
 
 
 
       </form>
-
-      <!-- SUCCESS -->
-      <div class="success-screen" id="successScreen">
-        <div class="success-icon">◈</div>
-        <h2 class="success-title">¡Reserva confirmada!</h2>
-        <p class="success-sub">Tu estancia en Élara ha sido registrada. Recibirás un correo de confirmación.</p>
-        <div class="success-id">
-          Número de reserva: <strong id="success-id-num">#0024</strong>
-        </div>
-        <a href="views/html/resultado.php" class="btn-primary" style="text-decoration:none;display:inline-block;">
-          Ver mis reservas
-        </a>
-      </div>
-
     </main>
   </div>
   <script src="views/js/reservar.js"></script>
