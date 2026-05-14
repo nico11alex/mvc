@@ -39,6 +39,13 @@
             $resultado = $user->registerUser($datos);
             if($resultado>0){
                 $_SESSION['success'] = 'Usuario registrado exitosamente';
+                $name = $datos["name"];
+                $email = $datos["email"];
+                $zona_la = new DateTimeZone('America/Bogota');
+                $fecha = new DateTime('now', $zona_la);
+                $fechaRegistro= $fecha->format('d/m/Y h:i:a'); 
+                $correo = new emailcontroler();
+                $correo->correoCuentaCreada($email,$name,$fechaRegistro);
                 header('location: ' .SITE_URL. 'index.php?action=getFormLogin');
                 exit;
 

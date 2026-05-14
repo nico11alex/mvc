@@ -8,7 +8,7 @@ use PhpOffice\PhpSpreadsheet\Style\Border;
 
 $sheet->mergeCells('A1:H1');
 
-$sheet->setCellValue('A1', 'REPORTE DE RESERVAS - HOTEL ELARA');
+$sheet->setCellValue('A1', 'REPORTE DE TUS RESERVAS - HOTEL ELARA');
 
 $sheet->getStyle('A1')->getFont()->setBold(true)->setSize(18);
 

@@ -46,6 +46,41 @@ class emailcontroler {
             echo "Error al enviar: {$mail->ErrorInfo}";
         }
     }
+
+    public function correoCuentaCreada($correo,$nombre,$fechaRegistro){
+        $mail = new PHPMailer(true);
+
+        try {
+            $mail->isSMTP();
+            
+            $mail->Host       = $_ENV['SMTP_HOST']; 
+            $mail->SMTPAuth   = true;
+            $mail->Username   = $_ENV['SMTP_USER']; 
+            $mail->Password   = $_ENV['SMTP_PASS']; 
+            $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+            $mail->Port       = $_ENV['SMTP_PORT']; 
+
+            $mail->setFrom($_ENV['SMTP_USER'], 'Hotel Élara');
+            $mail->addAddress($correo);
+
+            $mail->isHTML(true);
+            $mail->CharSet = 'UTF-8';
+
+            $mail->Subject = 'Bienvenido al Hotel Élara';
+
+            ob_start();
+
+            include 'views/emails/creacionUsuario.php';
+
+            $body = ob_get_clean();
+
+            $mail->Body = $body;
+
+            $mail->send();
+        } catch (Exception $e) {
+            echo "Error al enviar: {$mail->ErrorInfo}";
+        }
+    }
 }
 
 ?>
