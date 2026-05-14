@@ -2,26 +2,23 @@
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
-class emailControler{
-    public function enviarCorreo($correo,$datos){
-            
+class emailcontroler {
+
+    public function enviarCorreo($correo, $datos) {
+        
         $mail = new PHPMailer(true);
 
         try {
-
-
             $mail->isSMTP();
-            $mail->Host = 'smtp.gmail.com';
-            $mail->SMTPAuth = true;
-
-            $mail->Username = 'rodriguezvillotanicolas@gmail.com';
-            $mail->Password = 'twom qwvo irfp lwfy';
-
+            
+            $mail->Host       = $_ENV['SMTP_HOST']; 
+            $mail->SMTPAuth   = true;
+            $mail->Username   = $_ENV['SMTP_USER']; 
+            $mail->Password   = $_ENV['SMTP_PASS']; 
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-            $mail->Port = 587;
+            $mail->Port       = $_ENV['SMTP_PORT']; 
 
-            $mail->setFrom('rodriguezvillotanicolas@gmail.com', 'Hotel Elara');
-
+            $mail->setFrom($_ENV['SMTP_USER'], 'Hotel Elara');
             $mail->addAddress($correo);
 
             $nombre      = htmlspecialchars($datos['nombre']);
@@ -36,7 +33,6 @@ class emailControler{
 
             $mail->Subject = 'Reserva Exitosa';
 
-                // capturar HTML
             ob_start();
 
             include 'views/emails/reservaExitosa.php';
@@ -46,11 +42,10 @@ class emailControler{
             $mail->Body = $body;
 
             $mail->send();
-
-            } catch (Exception $e) {
-                echo $mail->ErrorInfo;
-            }
+        } catch (Exception $e) {
+            echo "Error al enviar: {$mail->ErrorInfo}";
         }
-
+    }
 }
+
 ?>

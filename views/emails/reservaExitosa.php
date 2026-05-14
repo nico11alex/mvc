@@ -195,27 +195,6 @@
               </tr>
             </table>
 
-            <!-- CTA Button -->
-            <table width="100%" cellpadding="0" cellspacing="0">
-              <tr>
-                <td align="center" style="padding-top:8px;">
-                  <a href="#" style="
-                    display:inline-block;
-                    background:linear-gradient(135deg,#c9a84c,#b8922e);
-                    color:#0f1820;
-                    text-decoration:none;
-                    font-family:Arial,sans-serif;
-                    font-size:11px;
-                    font-weight:700;
-                    letter-spacing:3px;
-                    text-transform:uppercase;
-                    padding:16px 40px;
-                    border-radius:4px;
-                  ">Ver mi reserva</a>
-                </td>
-              </tr>
-            </table>
-
             <!-- Divider -->
             <table width="100%" cellpadding="0" cellspacing="0" style="margin:40px 0 28px;">
               <tr><td style="height:1px;background:#e8e3db;"></td></tr>

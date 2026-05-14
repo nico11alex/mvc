@@ -6,8 +6,7 @@ class Reporte{
         $conexion = new Conexion();
         $conexion->conectar();
 
-        $conexion->queryPreparada(
-            "SELECT 
+        $conexion->queryPreparada("SELECT 
                 r.id,
                 r.fecha_inicio,
                 r.fecha_final,
@@ -38,10 +37,7 @@ class Reporte{
             JOIN usuarios u
             ON u.id = r.id_users
 
-            WHERE u.id = ?",
-            'i',
-            $id
-        );
+            WHERE u.id = ?",'i',$id);
 
         $result = $conexion->getResult();
 

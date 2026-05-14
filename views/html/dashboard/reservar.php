@@ -25,7 +25,9 @@ unset($_SESSION['errores_reserva']);
     <div class="logo-diamond"></div>
     <span class="logo-text">Élara</span>
   </div>
-  <button class="topbar-btn">Cerrar sesión</button>
+  <a href="">
+    <button class="topbar-btn">Cerrar sesión</button>
+  </a>
   </header>
 
   <div class="layout">

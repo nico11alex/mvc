@@ -11,6 +11,10 @@ require_once 'models/reportes.php';
 require_once 'libs/fpdf/fpdf.php';
 require_once 'controllers/reportesController.php';
 require_once 'vendor/autoload.php';
+
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+$dotenv->load();
+
 require_once 'controllers/emailsControler.php';
 
 $authController = new AuthController();
