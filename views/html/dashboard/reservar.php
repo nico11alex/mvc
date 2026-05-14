@@ -15,6 +15,7 @@ unset($_SESSION['errores_reserva']);
     href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400;500&display=swap"
     rel="stylesheet" />
   <link rel="stylesheet" href="views/style/style5.css?v=6">
+  <link rel="stylesheet" href="views/style/style6.css">
 </head>
 <body>
 
@@ -59,14 +60,14 @@ unset($_SESSION['errores_reserva']);
               <label for="fecha_inicio">Fecha de llegada <span class="req">*</span></label>
               <input type="date" id="fecha_inicio" name="fecha_inicio" value="<?= htmlspecialchars($_SESSION['old']['fecha_inicio'] ?? '') ?>" required />
               <?php if(isset($errores['fecha_inicio'])): ?>
-                <span><?= $errores['fecha_inicio'] ?></span>
+                <p class="error-text">⚠ <?= $errores['fecha_inicio'] ?></p>
               <?php endif; ?>
             </div>
             <div class="field">
               <label for="fecha_fin">Fecha de salida <span class="req">*</span></label>
               <input type="date" id="fecha_fin" name="fecha_fin" value="<?= htmlspecialchars($_SESSION['old']['fecha_fin'] ?? '') ?>" required />
               <?php if(isset($errores['fecha_final'])): ?>
-                <span><?= $errores['fecha_final'] ?></span>
+                <p class="error-text">⚠ <?= $errores['fecha_final'] ?></p>
               <?php endif; ?>
             </div>
             <div class="field">
@@ -82,7 +83,7 @@ unset($_SESSION['errores_reserva']);
               
           
               <?php if(isset($errores['adultos'])): ?>
-                  <span><?= $errores['adultos'] ?></span>
+                  <p class="error-text">⚠ <?= $errores['adultos'] ?></p>
               <?php endif; ?>
             </div>
             <div class="field">
@@ -105,17 +106,17 @@ unset($_SESSION['errores_reserva']);
                 <?php endforeach; ?>
               </select>
               <?php if(isset($errores['categorias'])): ?>
-                  <span><?= $errores['categorias'] ?></span>
+                  <p class="error-text">⚠ <?= $errores['categorias'] ?></p>
               <?php endif; ?>
             </div>
 
-            <div class="field" id="habitacion-select-wrap" style="margin-top:1rem;">
+            <div class="field" id="habitacion-select-wrap">
               <label for="habitacion_id">Habitación <span class="req">*</span></label>
               <select id="habitacion_id" name="habitacion_id">
                 <option value="">Seleccione una habitacion</option>
               </select>
               <?php if(isset($errores['habitacion_id'])): ?>
-                  <span><?= $errores['habitacion_id'] ?></span>
+                  <p class="error-text">⚠ <?= $errores['habitacion_id'] ?></p>
               <?php endif; ?>
             </div>
 
@@ -128,19 +129,17 @@ unset($_SESSION['errores_reserva']);
                 <?php endforeach; ?>
               </select>
               <?php if(isset($errores['id_metodo_pago'])): ?>
-                  <span><?= $errores['id_metodo_pago'] ?></span>
+                  <p class="error-text">⚠ <?= $errores['id_metodo_pago'] ?></p>
               <?php endif; ?>
             </div>
           </div>
+          <br>
           <div class="form-actions">
               <button type="submit">
                 Revisar reserva →
               </button>
             </div>
           </div>
-
-
-
       </form>
     </main>
   </div>

@@ -1,5 +1,9 @@
 <?php
 $nombreUsuario = $_SESSION['datosUsuario'][0]['name'];
+$errores = $_SESSION['errores_reserva'] ?? [];
+$old = $_SESSION['old'] ?? [];
+unset($_SESSION['old']);
+unset($_SESSION['errores_reserva']);
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -52,39 +56,75 @@ $nombreUsuario = $_SESSION['datosUsuario'][0]['name'];
             <div class="grid-2">
             <div class="field">
                 <label>Fecha de llegada <span class="req">*</span></label>
-                <input type="date" name="fecha_inicio" value="<?= $reserva['fecha_inicio'] ?>" required />
+                <input type="date" name="fecha_inicio" value="<?= htmlspecialchars($old['fecha_inicio'] ?? $reserva['fecha_inicio']) ?>" required />
+                <?php if(isset($errores['fecha_inicio'])): ?>
+                    <p class="error-text">⚠ <?= $errores['fecha_inicio'] ?></p>
+                    
+                <?php endif; ?>
             </div>
             <div class="field">
                 <label>Fecha de salida <span class="req">*</span></label>
-                <input type="date" name="fecha_fin" value="<?= $reserva['fecha_final'] ?>" required />
+                <input type="date" name="fecha_fin" value="<?= htmlspecialchars($old['fecha_fin'] ?? $reserva['fecha_final']) ?>" required />
+                <?php if(isset($errores['fecha_final'])): ?>
+                    <p class="error-text">⚠ <?= $errores['fecha_final'] ?></p>
+                <?php endif; ?>
             </div>
             <div class="field">
-                <label>Cantidad de personas <span class="req">*</span></label>
-                <input type="number" name="num_personas" value="<?= $reserva['num_personas'] ?>" min="1" max="10" required />
+                <label>Adultos <span class="req">*</span></label>
+                <select name="adultos" required>
+                    <?php $antiguoAdultos = $old['adultos'] ?? $reserva['num_personas']; ?>
+                    <option value="" <?php echo ($antiguoAdultos == "") ? 'selected' : ''; ?>>Seleccionar</option>
+                    <option value="1" <?php echo ($antiguoAdultos == "1") ? 'selected' : ''; ?>>1 adulto</option>
+                    <option value="2" <?php echo ($antiguoAdultos == "2") ? 'selected' : ''; ?>>2 adultos</option>
+                    <option value="3" <?php echo ($antiguoAdultos == "3") ? 'selected' : ''; ?>>3 adultos</option>
+                    <option value="4" <?php echo ($antiguoAdultos == "4") ? 'selected' : ''; ?>>4 adultos</option>
+                </select>
+                <?php if(isset($errores['adultos'])): ?>
+                    <span><?= $errores['adultos'] ?></span>
+                <?php endif; ?>
+            </div>
+            <div class="field">
+                <label>Menores de edad</label>
+                <select name="menores">
+                    <?php $antiguo = $old['menores'] ?? '0'; ?>
+                    <option value="0" <?php echo ($antiguo == "0") ? 'selected' : ''; ?>>Ninguno</option>
+                    <option value="1" <?php echo ($antiguo == "1") ? 'selected' : ''; ?>>1 menor</option>
+                    <option value="2" <?php echo ($antiguo == "2") ? 'selected' : ''; ?>>2 menores</option>
+                    <option value="3" <?php echo ($antiguo == "3") ? 'selected' : ''; ?>>3 menores</option>
+                </select>
             </div>
             <div class="field">
               <label>Categoría <span class="req">*</span></label>
               <select name="categoria_id" id="categoria_id" required>
                 <?php foreach($categorias as $cat): ?>
-                  <option value="<?= $cat['id'] ?>" <?= $cat['id']==$reserva['id_categoria'] ? 'selected' : '' ?>><?= $cat['name'] ?></option>
+                  <option value="<?= $cat['id'] ?>" <?= $cat['id']==($old['categoria_id'] ?? $reserva['id_categoria']) ? 'selected' : '' ?>><?= $cat['name'] ?></option>
                 <?php endforeach; ?>
               </select>
+              <?php if(isset($errores['categorias'])): ?>
+                <span><?= $errores['categorias'] ?></span>
+              <?php endif; ?>
             </div>
             <div class="field">
                 <label>Habitación <span class="req">*</span></label>
                 <select name="habitacion_id" id="habitacion_id">
-                  <option value="<?= $reserva['id_habitacion'] ?>" selected>Habitación <?= htmlspecialchars($reserva['num_habitacion']) ?></option>
+                  <option value="<?= $old['habitacion_id'] ?? $reserva['id_habitacion'] ?>" selected>Habitación <?= htmlspecialchars($old['num_habitacion'] ?? $reserva['num_habitacion']) ?></option>
                 </select>
+                <?php if(isset($errores['habitacion_id'])): ?>
+                    <span><?= $errores['habitacion_id'] ?></span>
+                <?php endif; ?>
             </div>
             <div class="field">
                 <label>Método de pago <span class="req">*</span></label>
                 <select name="id_metodo_pago" required>
                 <?php foreach($metodos as $metodo): ?>
-                    <option value="<?= $metodo['id'] ?>" <?= $metodo['id']==$reserva['id_metodo_pago'] ? 'selected' : '' ?>>
+                    <option value="<?= $metodo['id'] ?>" <?= $metodo['id']==($old['id_metodo_pago'] ?? $reserva['id_metodo_pago']) ? 'selected' : '' ?>>
                     <?= $metodo['name'] ?>
                     </option>
                 <?php endforeach; ?>
                 </select>
+                <?php if(isset($errores['id_metodo_pago'])): ?>
+                    <span><?= $errores['id_metodo_pago'] ?></span>
+                <?php endif; ?>
             </div>
             </div>
             <div class="form-actions">

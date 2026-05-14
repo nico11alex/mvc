@@ -68,7 +68,7 @@
     public function nombreUsuario($data) {
         $conexion = new Conexion();
         $conexion->conectar();
-        $sql = "SELECT id ,name FROM usuarios WHERE email = '{$data['email']}'";
+        $sql = "SELECT id ,name,email FROM usuarios WHERE email = '{$data['email']}'";
         $conexion->query($sql);
         $result = $conexion->getResult();
         $opcion =$result->fetch_all(MYSQLI_ASSOC);        

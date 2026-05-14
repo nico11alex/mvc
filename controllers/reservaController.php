@@ -19,6 +19,21 @@ class ReservarController{
             $precio = $reserva->getPrecioHabitacion($datos['habitacion_id']) * $noches;
             
             if($reserva->crearReserva($datos, $id,$numPersonas,$precio)){
+                $emailUsuario = $_SESSION['datosUsuario'][0]['email'];
+                $nombreUsuario = $_SESSION['datosUsuario'][0]['name']; // ajusta según tu sesión
+                $numHabitacion =$reserva->obtenerHabitacion($datos['habitacion_id']);
+                $datosCorreo = [
+                    'nombre'       => $nombreUsuario,
+                    'habitacion'   => $numHabitacion['num_habitacion'],   // o el nombre si lo tienes
+                    'fecha_inicio' => $datos['fecha_inicio'],
+                    'fecha_fin'    => $datos['fecha_fin'],
+                    'noches'       => $noches,
+                    'num_personas' => $numPersonas,
+                    'precio'       => $precio,
+                ];
+
+                $correoSucces = new emailControler();
+                $correoSucces->enviarCorreo($emailUsuario, $datosCorreo);
                 header('Location: index.php?action=misReservas');
             } else {
                 header('Location: index.php?action=getFormReservar');
@@ -77,14 +92,18 @@ class ReservarController{
         }
 
         public function actualizarReserva($datos){
+            unset($_SESSION['errores_reserva']);
+            unset($_SESSION['old']);
             $reserva = new Reserva();
             $errores = $this->validarDatos($datos);
             if($errores != []){
                 $_SESSION['errores_reserva'] = $errores;
                 $_SESSION['old']=$datos;
-                header('location: ' .SITE_URL. 'index.php?action=getFormReservar');
+                header('location: ' .SITE_URL. 'index.php?action=editarReserva&id=' . $datos['id']);
                 exit;
             }
+            $numPersonas = (int)$datos['adultos'] + (int)$datos['menores'];
+            $datos['num_personas'] = $numPersonas;
             $reserva->actualizar($datos);
             header('Location: index.php?action=misReservas');
             
@@ -120,7 +139,5 @@ class ReservarController{
             $reserva->cambiarACancelado($id);
             header('Location: index.php?action=misReservas');
         }
-
 }
-
 ?>

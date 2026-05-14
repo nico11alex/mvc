@@ -1,0 +1,22 @@
+.input-error {
+  border: 2px solid #e74c3c !important;
+  background-color: #fff5f5;
+}
+
+.error-text {
+  color: #e74c3c;
+  font-size: 0.85rem;
+  margin-top: 5px;
+}
+
+.error-box {
+  background: #fdecea;
+  border-left: 5px solid #e74c3c;
+  padding: 12px;
+  margin-bottom: 20px;
+  border-radius: 6px;
+}
+
+.error-box ul {
+  margin: 5px 0 0 15px;
+}

@@ -1,5 +1,6 @@
 <?php
 $nombreUsuario = $_SESSION['datosUsuario'][0]['name'];
+$id = $_SESSION['datosUsuario'][0]['id'];
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -29,7 +30,6 @@ $nombreUsuario = $_SESSION['datosUsuario'][0]['name'];
     </header>
 
     <div class="layout">
-
         <!-- SIDEBAR -->
         <aside class="sidebar">
             <nav class="nav">
@@ -65,6 +65,11 @@ $nombreUsuario = $_SESSION['datosUsuario'][0]['name'];
             <!-- SECCIÓN RESERVAS -->
             <div class="section-hdr">
                 <span class="section-label">Tus reservas</span>
+                <a href="index.php?action=excel&id=<?= $id ?>">
+                    <button class="btn-reservar">
+                        + Excel
+                    </button>
+                </a>
                 <a href="<?=SITE_URL ?>index.php?action=getFormReservar">
                     <button class="btn-reservar">
                         + Reservar
@@ -89,6 +94,7 @@ $nombreUsuario = $_SESSION['datosUsuario'][0]['name'];
                             <th>Fecha fin</th>
                             <th>Estado</th>
                             <th>Acciones</th>
+                            <th>PDF</th>
                         </tr>
                     </thead>
                     <tbody id="tbody">
@@ -107,6 +113,11 @@ $nombreUsuario = $_SESSION['datosUsuario'][0]['name'];
                                     </a>
                                     <a href="index.php?action=cancelarReserva&id=<?= $r['id'] ?>">
                                         <button class="btn-delete">Cancelar</button>
+                                    </a>
+                                </td>
+                                <td>
+                                    <a href="index.php?action=pdf&id=<?= $r['id'] ?>">
+                                        <button class="btn-edit">PDF</button>
                                     </a>
                                 </td>
                             </tr>

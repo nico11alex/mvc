@@ -84,7 +84,7 @@ class Reserva{
     public function getById($id){
         $conexion = new Conexion();
         $conexion->conectar();
-        $conexion->queryPreparada("SELECT r.id,r.fecha_inicio,r.fecha_final,r.num_personas,r.estado,r.precio,h.id as id_habitacion,h.num_habitacion,c.id as id_categoria,c.name, r.id_metodo_pago,m.name
+        $conexion->queryPreparada("SELECT r.id,r.fecha_inicio,r.fecha_final,r.num_personas,r.estado,r.precio,h.id as id_habitacion,h.num_habitacion,c.id as id_categoria,c.name as categoria, r.id_metodo_pago,m.name as metodo_pago
             FROM reservas r 
             JOIN habitaciones h
             ON r.id_habitacion = h.id 
@@ -108,6 +108,17 @@ class Reserva{
         $filas = $conexion->getFilasAfectadas();
         $conexion->desconectar();
         return $filas > 0;
+    }
+
+    public function obtenerHabitacion($id){
+        $conexion = new Conexion();
+        $conexion->conectar();
+        $conexion->queryPreparada("SELECT num_habitacion
+            FROM habitaciones
+            WHERE id = ?", 'i', $id);
+        $result = $conexion->getResult()->fetch_assoc();
+        $conexion->desconectar();
+        return $result;
     }
 }
 ?>

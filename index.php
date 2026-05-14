@@ -7,9 +7,16 @@ require_once 'controllers/reservaController.php';
 require_once 'controllers/controlController.php';
 require_once 'models/user.php';
 require_once 'models/reserva.php';
+require_once 'models/reportes.php';
+require_once 'libs/fpdf/fpdf.php';
+require_once 'controllers/reportesController.php';
+require_once 'vendor/autoload.php';
+require_once 'controllers/emailsControler.php';
+
 $authController = new AuthController();
 $control = new Control();
 $reservaController = new ReservarController();
+$reportesController = new ReportesControllers();
 
 if(isset($_GET['action'])){
     if($_GET['action']=='getFormRegisterUser'){
@@ -60,6 +67,13 @@ if(isset($_GET['action'])){
     }
     if($_GET['action']=='cancelarReserva'){
         $reservaController->cancelarReserva($_GET['id']);
+    }
+    if($_GET['action']=='pdf'){
+        $reportesController->generarPDF($_GET['id']);
+        exit;
+    }
+    if($_GET['action']=='excel'){
+        $reportesController->generarExcel($_GET['id']);
     }
 }else{
     $control->verPagina('views/html/dashboard/home.php');
